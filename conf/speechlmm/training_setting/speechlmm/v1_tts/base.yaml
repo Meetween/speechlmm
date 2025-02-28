@@ -1,0 +1,82 @@
+# @package _global_
+
+defaults:
+  - override /model/audio_encoder: seamless
+  - override /model/audio_adapter: mlp
+  - override /model/video_encoder: auto_avsr
+  - override /model/video_adapter: mlp
+  - override /model/codec_encoder: mimi
+  - override /model/codec_decoder: mimi
+  - override /model/backfeeding_audio_adapter: features
+  - override /model/conditioning_audio_adapter: qformer
+  - override /model/talking_head: moshi_bert
+  - _self_
+
+wandb_project: speechlmm-v1-tts
+
+data:
+  num_proc_for_preprocessing: 64
+  align_text_to_audio: none
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/speechlmm_v1/speechlmm_v1_tts.yml
+  rebuild_dataset_cache: false
+  restore_punctuation_and_spaces: true
+  task_weights:
+    TextInstruct: 0.2
+    MT: 0.1
+    TSUM: 0.1
+    ASR: 0.2
+    ST: 0.2
+    SSUM: 0.1
+    SQA: ???
+    SLU_INTENT_ONLY: 0.1
+    VSR: ???
+    TTS: ???
+    S2ST: ???
+  multi_task_sampler: alternating
+  replacement: true
+  variable_batch_size: false
+  group_dataset_by_task:
+    train: true
+  max_condition_audio_duration: 5
+
+training:
+  # per_device_train_batch_size: 8
+  gradient_accumulation_steps: 11
+  save_steps: 2500
+  save_total_limit: 5
+  num_train_epochs: 10
+  eval_steps: 0
+  eval_strategy: "no"
+  attn_implementation: flash_attention_2
+  dataloader_num_workers: 0 # to avoid error w. whisper inference: RuntimeError: Cannot re-initialize CUDA in forked subprocess. To use CUDA with multiprocessing, you must use the 'spawn' start method
+  mm_projector_lr: 5.0e-5
+  learning_rate: 5.0e-5
+  freeze_modules:
+    - audio_encoder
+    - codec_encoder
+    - codec_decoder
+  group_by_modality_length: false
+  report_to: wandb
+
+model:
+  perturb_prob: 0.2
+  pad_audio_weight: 1
+  perturb_prob_decay: 0.5 # perturb_prob * (1 - t/T)^perturb_prob_decay
+  # epad_audio_weight: 1
+  # pad_epad_audio_weight_decay: 0.5 # pad_audio_weight * (1 - t/T)^pad_audio_weight_decay
+
+  add_all_multimodal_tokens: true
+
+  backfeeding_audio_adapter:
+    audio_adapter:
+      hidden_layers: 6
+  talking_head:
+    depformer_num_layers: 8
+  conditioning_audio_adapter:
+    num_hidden_layers: 6
+
+  codebook_weights: [1, 1, 1, 1, 1, 1, 1, 1]
+
+# ADD THIS IF YOU WANT TO USE TRAIN ALSO ON S2ST and/or ASR, ST
+  audio_adapter:
+    hidden_layers: 6

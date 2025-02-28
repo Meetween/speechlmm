@@ -1,0 +1,163 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - EverythingInstructMultilingual:
+        datapath: ${DATA_HOME}/everything_instruct_multilingual
+        task: "TextInstruct"
+        languages: ["en"]
+        partitions:
+            train:
+                amount: ":30%"
+                min_num_words: null
+                max_num_words: 300
+                destination: "train"
+
+    - AMI:
+        datapath: ${DATA_HOME}/ami_segmented
+        task: "TSUM"
+        languages:
+            - en
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: null
+                max_duration: 240
+                destination: "train"
+
+    - ICSI:
+        datapath: ${DATA_HOME}/icsi_segmented
+        task: "TSUM"
+        languages:
+            - en
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: null
+                max_duration: 240
+                destination: "train"
+
+    - Europarl:
+        datapath: ${DATA_HOME}/europarl-ST/preprocessed
+        task: "MT"
+        languages:
+            - "all"
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+
+    - AMI:
+        datapath: ${DATA_HOME}/ami_segmented
+        task: "SSUM"
+        languages:
+            - en
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: null
+                max_duration: 240
+                destination: "train"
+
+    - ICSI:
+        datapath: ${DATA_HOME}/icsi_segmented
+        task: "SSUM"
+        languages:
+            - en
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: null
+                max_duration: 240
+                destination: "train"
+
+
+    - CommonVoice:
+        datapath: ${DATA_HOME}/common_voice_17_0
+        task: "ASR"
+        languages: ["en", "de", "fr", "it", "es"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+            test:
+                amount: ":1%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "eval"
+
+    - CoVoST:
+        datapath: ${DATA_HOME}/CoVoST/preprocessed
+        task: "ST"
+        languages: ["en-de", "fr-en", "it-en", "de-en", "es-en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+            test:
+                amount: ":1%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "eval"
+
+    - Europarl:
+        datapath: ${DATA_HOME}/europarl-ST/preprocessed
+        task: "ST"
+        languages:
+            - "all"
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+
+    - Slurp:
+        datapath: ${DATA_HOME}/slurp
+        task: SLU_INTENT_ONLY
+        languages:
+            - en
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+
+    - SpeechMassive:
+        datapath: ${DATA_HOME}/SpeechMassive-HF
+        task: SLU_INTENT_ONLY
+        languages:
+            - de
+            - fr
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+
+    # - LRS2VideoOnly:
+    #     datapath: ${DATA_HOME}/LRS2-BBC
+    #     task: "VSR"
+    #     languages: ["en"]
+    #     partitions:
+    #         train:
+    #             amount: ":100%"
+    #             min_duration: 0.1
+    #             max_duration: 30
+    #             destination: "train"
+    #         validation:
+    #             amount: ":100%"
+    #             min_duration: 0.1
+    #             max_duration: 30
+    #             destination: "eval"

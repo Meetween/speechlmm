@@ -1,0 +1,24 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - Oasst:
+        datapath: ${DATA_HOME}/oasst1
+        task: "MultiTurnTextInstruct"
+        languages: ["all"]
+        partitions:
+            train:
+                amount: ":100%"
+                destination: "train"
+
+    - Oasst:
+        datapath: ${DATA_HOME}/oasst2
+        task: "MultiTurnTextInstruct"
+        languages: ["all"]
+        partitions:
+            train:
+                amount: ":100%"
+                destination: "train"

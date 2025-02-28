@@ -1,0 +1,23 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - NllbParacrawl: # same name of the dataset class
+        datapath: ${DATA_HOME}/NLLBParaCrawl2M
+        task: MT
+        languages:
+            - de-en
+            - en-es
+            - en-fr
+            - en-it
+            - en-de
+            - es-en
+            - fr-en
+            - it-en
+        partitions:
+            train:
+                amount: ":1%"
+                destination: "train"

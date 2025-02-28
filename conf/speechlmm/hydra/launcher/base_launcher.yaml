@@ -1,0 +1,5 @@
+defaults:
+  - submitit_slurm
+  - _self_
+
+submitit_folder: ${hydra.sweep.dir}/.submitit/%j__${hydra.sweep.subdir}

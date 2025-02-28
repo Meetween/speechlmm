@@ -1,0 +1,79 @@
+# @package _global_
+
+defaults:
+  - _self_
+
+wandb_project: moshi
+deepspeed_config: ${oc.env:SPEECHLMM_ROOT}/conf/deepspeed/zero3.json
+
+data:
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/libritts_r.yml
+  align_text_to_audio: false
+  align_with_whisper: false
+  rebuild_dataset_cache: false
+  num_proc_for_preprocessing: 32
+
+
+training:
+  per_device_train_batch_size: 8
+  save_steps: 2500
+  save_total_limit: 10
+  num_train_epochs: 10
+  eval_steps: 0
+  eval_strategy: "no"
+  attn_implementation: flash_attention_2
+  dataloader_num_workers: 0 # to avoid error w. whisper inference: RuntimeError: Cannot re-initialize CUDA in forked subprocess. To use CUDA with multiprocessing, you must use the 'spawn' start method
+  mm_projector_lr: 8.0e-5
+  learning_rate: 8.0e-5
+  freeze_modules:
+    - audio_encoder
+    - codec_encoder
+    - codec_decoder
+    - text_decoder
+  lora_adapters:
+    - name: text_decoder_peft_adapter
+      target_module: text_decoder.model
+      task_type: CAUSAL_LM
+      r: 128
+      lora_alpha: 256
+      lora_dropout: 0.05
+      bias: none
+      use_rslora: true
+  group_by_modality_length: false
+  report_to: wandb
+  run_name: "moshi_from_codes"
+
+model:
+  perturb_codes: true
+  perturb_prob: 0.2
+  pad_audio_weight: 0.8
+  epad_audio_weight: 1.0
+  pad_epad_audio_weight_decay: 0.5 # pad_audio_weight * (1 - t/T)^pad_audio_weight_decay
+  perturb_prob_decay: 0.5 # perturb_prob * (1 - t/T)^perturb_prob_decay
+
+  backfeeding_audio_adapter:
+    use_post_qantizer: true
+    variable_compression_factor: false
+    compression_factor: 1
+    audio_adapter:
+      hidden_layers: 6
+  conditioning_audio_adapter:
+    num_hidden_layers: 6
+    num_queries: 12
+    compression_factor: 25
+  talking_head:
+    depformer_num_layers: 8
+    use_text_tokens: false
+    depformer_expansion_factor: 1
+    memory: false
+
+
+# python speechlmm/train/train_hydra.py \
+#     --config-name pretrain \
+#     model/codec_encoder=mimi \
+#     model/codec_decoder=mimi \
+#     model/conditioning_audio_adapter=qformer \
+#     model/backfeeding_audio_adapter=mlp_codes \
+#     model/text_decoder=llama_3_1 \
+#     model/talking_head=moshi_bert \
+#     training_setting=audio_io/moshi_bert

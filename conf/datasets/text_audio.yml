@@ -1,0 +1,78 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - Alpaca:
+        datapath: ${DATA_HOME}/alpaca
+        task: "TextInstruct"
+        languages: ["en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_num_words: null
+                max_num_words: 100
+                destination: "train"
+
+    - HelpfulInstructions:
+        datapath: ${DATA_HOME}/helpful_instructions
+        task: "TextInstruct"
+        languages: ["en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_num_words: null
+                max_num_words: 100
+                destination: "train"
+
+    - GradeSchoolMathInstructions:
+        datapath: ${DATA_HOME}/grade-school-math-instructions
+        task: "TextInstruct"
+        languages: ["en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_num_words: null
+                max_num_words: 100
+                destination: "train"
+
+    - DatabricksDolly15k:
+        datapath: ${DATA_HOME}/databricks-dolly-15k
+        task: "TextInstruct"
+        languages: ["en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_num_words: null
+                max_num_words: 100
+                destination: "train"
+
+    - EverythingInstructMultilingual:
+        datapath: ${DATA_HOME}/everything_instruct_multilingual
+        task: "TextInstruct"
+        languages: ["en"]
+        partitions:
+            train:
+                amount: ":5%"
+                min_num_words: null
+                max_num_words: 100
+                destination: "train"
+
+    - LibriTTS: # same name of the dataset class
+        datapath: ${DATA_HOME}/parler_tts/LibriTTS-R-Filtered
+        task: "TTS" # one task per dataset, you can duplicate the dataset and change the task
+        languages: ["en"]
+        partitions:
+            train_clean_100: # the name of the partition of your dataset, could be any name, such as "train-other-500" or "my-custom-partition"
+                amount: ":100%"  # options: ":X%" or "X1:X2%"
+                destination: "train"
+            # train_clean_360:
+            #     amount: ":100%"
+            #     destination: "train"
+            # train_other_500:
+            #     amount: ":100%"
+            #     destination: "train"
+        additional_args:
+            add_speaker_descriptions: false

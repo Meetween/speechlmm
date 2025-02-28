@@ -1,0 +1,70 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - MuSTC: # same name of the dataset class
+        datapath: ${DATA_HOME}/MUSTC_v1.0/preprocessed_redone
+        task: "ST"
+        languages: ["en-de", "en-fr", "en-it", "en-es"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+            test:
+                amount: ":1%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "eval"
+
+    - MuSTC: # same name of the dataset class
+        datapath: ${DATA_HOME}/MUSTC_v1.0/preprocessed_redone
+        task: "ASR"
+        languages: ["en-de"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+            test:
+                amount: ":1%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "eval"
+
+    - CoVoST:
+        datapath: ${DATA_HOME}/CoVoST/preprocessed
+        task: "ASR"
+        languages: ["en-de", "fr-en", "it-en", "de-en", "es-en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+            test:
+                amount: ":1%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "eval"
+
+    - CoVoST:
+        datapath: ${DATA_HOME}/CoVoST/preprocessed
+        task: "ST"
+        languages: ["en-de", "fr-en", "it-en", "de-en", "es-en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+            test:
+                amount: ":1%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "eval"

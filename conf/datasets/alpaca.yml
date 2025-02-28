@@ -1,0 +1,15 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - Alpaca:
+        datapath: ${DATA_HOME}/alpaca
+        task: "TextInstruct"
+        languages: ["en"]
+        partitions:
+            train:
+                amount: ":2%"
+                destination: "train"

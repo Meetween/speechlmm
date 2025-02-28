@@ -1,0 +1,17 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - CoVoST: # same name of the dataset class
+        datapath: ${DATA_HOME}/CoVoST/preprocessed
+        task: "ASR" # one task per dataset, you can duplicate the dataset and change the task
+        languages: ["en-de"]
+        partitions:
+            test: # the name of the partition of your dataset, could be any name, such as "train-other-500" or "my-custom-partition"
+                amount: ":100%"  # options: ":X%" or "X1:X2%"
+                min_duration: 30
+                max_duration: 60
+                destination: "test" # options: "train", "validation", "test"

@@ -1,0 +1,25 @@
+    def update(;"    def __getattr__(self, name: str):
+        # Note: This whole method may seem overly complex at first but PyTorch messes with __getattr__ in a way that
+        # requires very careful handling to avoid infinite recursion.
+        try:
+            return super().__getattr__(name)
+        except AttributeError:
+            pass
+
+        if ""_modules"" not in self.__dict__:
+            raise AttributeError(f""'{type(self).__name__}' object has no attribute '{name}'"")
+
+        # Could not find the attribute the PyTorch way. So let's check if it's an attribute on the
+        # original_module/modules_to_save.
+        modules = self.__dict__[""_modules""]
+        if self.disable_adapters:
+            module = modules[""original_module""]
+        elif self.active_adapter in modules[""modules_to_save""]:
+            module = modules[""modules_to_save""][self.active_adapter]
+        else:
+            # For some reason, there is no module corresponding to the active adapter; this should normally not be
+            # reached and exists as a failsafe (otherwise, a KeyError would be raised)
+            raise AttributeError(f""'{type(self).__name__}' object has no attribute '{name}'"")
+        return getattr(module, name)
+
+    def update("

@@ -1,0 +1,16 @@
+1. text: "Hello, everyone!", start: 0.0, end: 1.5
+2. text: "Welcome to the conference.", start: 1.5, end: 3.5
+3. text: "Today, we will discuss the latest advancements in AI.", start: 3.5, end: 6.2
+4. text: "Our first speaker is an expert in natural language processing.", start: 6.2, end: 13.4
+5. text: "Let's give a warm welcome to Dr. Smith!", start: 13.44, end: 16.1
+6. text: "Dr. Smith, please come to the stage.", start: 16.1, end: 18.3
+7. text: "Thank you for the introduction.", start: 18.3, end: 21.2
+8. text: "I'm excited to be here today.", start: 21.2, end: 25.2
+9. text: "Let's start with a brief overview of our research.", start: 25.2, end: 31.5
+10. text: "Our team has been working on innovative projects in AI.", start: 31.5, end: 36.8
+11. text: "We have achieved significant results in speech recognition.", start: 36.8, end: 41.2
+12. text: "I will present some of our key findings in this talk.", start: 41.2, end: 45.5
+13. text: "Let's begin with the first topic: neural networks.", start: 45.5, end: 49.8
+14. text: "Neural networks have revolutionized machine learning.", start: 49.8, end: 54.3
+15. text: "They have enabled us to solve complex problems in new ways.", start: 54.3, end: 59.0
+16. text: "Our research focuses on improving neural network architectures.", start: 59.0, end: 63.5

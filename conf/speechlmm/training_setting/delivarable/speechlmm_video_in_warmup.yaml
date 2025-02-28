@@ -1,0 +1,46 @@
+# @package _global_
+
+defaults:
+  - _self_
+
+wandb_project: speechlmm
+deepspeed_config: ${oc.env:SPEECHLMM_ROOT}/conf/deepspeed/zero3.json
+
+data:
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/lrs2_video_only.yml
+  rebuild_dataset_cache: false
+  num_proc_for_preprocessing: 64
+
+training:
+  per_device_train_batch_size: 8
+  gradient_accumulation_steps: 1
+  save_steps: 1000
+  save_total_limit: 10
+  num_train_epochs: 1
+  eval_strategy: "no"
+  attn_implementation: flash_attention_2
+  dataloader_num_workers: 4
+
+  learning_rate: 8.0e-5
+
+  freeze_modules:
+    - video_encoder
+    - text_decoder
+
+  group_by_modality_length: false
+  report_to: wandb
+
+model:
+  add_all_multimodal_tokens: true
+  video_adapter:
+    num_hidden_layers: 4
+    num_queries: 4
+    compress_factor: 2
+
+
+# python speechlmm/train/train_hydra.py \
+#     --config-name pretrain \
+#     model/video_encoder=auto_avsr \
+#     model/video_adapter=qformer \
+#     model/text_decoder=llama_3_1 \
+#     training_setting=delivarable/speechlmm_video_in_warmup

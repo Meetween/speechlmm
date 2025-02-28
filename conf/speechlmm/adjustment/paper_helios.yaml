@@ -1,0 +1,19 @@
+defaults:
+  - _self_
+
+adjustments:
+  - conditions:
+      num_gpus: 4
+      training.gradient_accumulation_steps: 4
+    overrides:
+      training:
+        gradient_accumulation_steps: 8
+  - conditions:
+      num_gpus: 4
+      training.gradient_accumulation_steps: 2
+    overrides:
+      training:
+        gradient_accumulation_steps: 4
+  - conditions: {}
+    overrides:
+      deepspeed_config: ${oc.env:SPEECHLMM_ROOT}/conf/deepspeed/zero1.json

@@ -1,0 +1,45 @@
+defaults:
+  # - base_launcher  # restore this
+  - submitit_slurm
+  - _self_
+
+nodes: 1
+cpus_per_task: 256
+mem_gb: 478
+timeout_min: 2880  # 48 hours
+account: plgmeetween2025-gpu-gh200
+partition: plgrid-gpu-gh200
+gres: gpu:4
+setup:
+  - |
+    set -euo pipefail
+
+    export DATA_HOME=$SCRATCH/data
+    export SPEECHLMM_ROOT=$SCRATCH/speechlmm
+    export AUTO_AVSR_CHECKPOINTS=$SCRATCH/auto_avsr_ckpt
+    export CHECKPOINTS_HOME=$SCRATCH/checkpoints
+
+    export VENVS_HOME=$SCRATCH/venvs
+
+    SPEECHLMM_LOCAL_VENV_PATH=$VENVS_HOME/speechlmm-local
+    export PATH=$(echo $PATH | sed -e "s|$(echo $SPEECHLMM_LOCAL_VENV_PATH)/bin:||")
+    unset VIRTUAL_ENV
+
+    MODULESHOME=$(echo $MODULESHOME | sed "s|x86_64|aarch64|g")
+    MODULEPATH=$(echo $MODULEPATH | sed "s|x86_64|aarch64|g")
+    LMOD_ROOT=$(echo $LMOD_ROOT | sed "s|x86_64|aarch64|g")
+    LMOD_PKG=$(echo $LMOD_PKG | sed "s|x86_64|aarch64|g")
+    LMOD_DIR=$(echo $LMOD_DIR | sed "s|x86_64|aarch64|g")
+    LMOD_CMD=$(echo $LMOD_CMD | sed "s|x86_64|aarch64|g")
+
+    module load ML-bundle/24.06a
+    source $VENVS_HOME/speechlmm/bin/activate
+
+    export MASTER_ADDR=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
+    export MASTER_PORT=29500
+
+# SLURM executor __init__ kwargs
+# Needed to instruct submitit to use the correct python interpreter for the job, i.e. the one
+# inside the "speechlmm" virtual environment. If we omit this, submitit would use the same interpreter
+# used to launch the job, i.e. the one inside the "speechlmm-local" virtual environment
+python: $VENVS_HOME/speechlmm/bin/python3

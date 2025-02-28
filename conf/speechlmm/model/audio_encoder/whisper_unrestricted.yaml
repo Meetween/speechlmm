@@ -1,0 +1,5 @@
+defaults:
+  - whisper
+  - _self_
+
+model_type: whisper-unrestricted

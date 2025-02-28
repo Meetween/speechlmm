@@ -1,0 +1,19 @@
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+DATA:
+  - LRS2VideoOnly:
+      datapath: ${DATA_HOME}/LRS2-BBC
+      task: VSR
+      languages:
+        - en
+      partitions:
+        train:
+          amount: ":1%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: train
+        validation:
+          amount: ":1%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: eval

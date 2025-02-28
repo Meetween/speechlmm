@@ -1,0 +1,10 @@
+defaults:
+  - _self_
+
+# hydra:
+#   sweep:
+#     dir: multirun
+
+model:
+  conversation_version: null
+  tokenizer_padding_side: right

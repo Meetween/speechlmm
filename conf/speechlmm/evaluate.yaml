@@ -1,0 +1,23 @@
+defaults:
+  - base
+  - _self_
+
+hydra:
+  run:
+    dir: outputs/${hydra.sweep.subdir}
+  sweep:
+    subdir: ${stem:${model.name_or_path}}__${stem:${eval.dataset_name_or_path}}__${now:%Y-%m-%d}_${now:%H-%M-%S}
+
+model:
+  name_or_path: ???
+  tokenizer_padding_side: left
+
+generation:
+  max_new_tokens: 200
+  temperature: 0.0
+
+eval:
+  dataset_name_or_path: ???
+  datasets_dir: null
+  results_dir: ???
+  batch_size: 10

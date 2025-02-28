@@ -1,0 +1,146 @@
+"""
+### Task Explanation
+You are tasked with understanding spoken language in any language. Given an audio file of a spoken utterance, you need to understand:
+1. The **intent** of the utterance, which describes the overall goal or action desired.
+2. The **slots** within the utterance, which are key pieces of information relevant to the intent.
+Following are listed the possible intent strings and slot types that you can choose from.
+
+#### Intent Strings (intent_str):
+- general_quirky
+- calendar_query
+- alarm_set
+- calendar_set
+- calendar_remove
+- lists_createoradd
+- iot_wemo_off
+- lists_query
+- social_query
+- play_game
+- qa_factoid
+- iot_hue_lightchange
+- recommendation_locations
+- datetime_query
+- music_query
+- music_likeness
+- general_joke
+- email_sendemail
+- weather_query
+- news_query
+- cooking_recipe
+- lists_remove
+- recommendation_events
+- transport_query
+- qa_stock
+- play_music
+- transport_traffic
+- play_audiobook
+- email_query
+- transport_ticket
+- email_querycontact
+- play_radio
+- iot_hue_lightoff
+- email_addcontact
+- takeaway_query
+- iot_hue_lightup
+- audio_volume_up
+- play_podcasts
+- iot_hue_lightdim
+- iot_coffee
+- iot_cleaning
+- takeaway_order
+- qa_maths
+- alarm_remove
+- alarm_query
+- recommendation_movies
+- qa_definition
+- social_post
+- qa_currency
+- audio_volume_mute
+- audio_volume_down
+- transport_taxi
+- audio_volume_other
+- music_settings
+- iot_wemo_on
+- iot_hue_lighton
+- datetime_convert
+- general_greet
+- music_dislikeness
+- cooking_query
+
+#### Slot Types (slot_type):
+- transport_agency
+- movie_type
+- drink_type
+- coffee_type
+- meal_type
+- food_type
+- person
+- transport_name
+- song_name
+- email_folder
+- transport_type
+- definition_word
+- movie_name
+- media_type
+- music_album
+- device_type
+- audiobook_name
+- business_name
+- personal_info
+- joke_type
+- change_amount
+- game_name
+- place_name
+- music_genre
+- news_topic
+- weather_descriptor
+- time_zone
+- event_name
+- artist_name
+- alarm_type
+- time
+- currency_name
+- color_type
+- order_type
+- general_frequency
+- house_place
+- radio_name
+- business_type
+- relation
+- cooking_type
+- podcast_name
+- game_type
+- ingredient
+- transport_descriptor
+- player_setting
+- audiobook_author
+- playlist_name
+- sport_type
+- music_descriptor
+- date
+- list_name
+- podcast_descriptor
+- app_name
+- timeofday
+- email_address
+
+#### Input Format
+language: <language>
+
+#### Output Format
+The output should be a JSON object containing the predicted intent string and the annotated utterance. The annotated utterance should highlight the slots with their respective types.
+
+#### Example Input
+language: german
+
+#### Example Output
+{'intent_str':'alarm_set','annot_utt':'stelle einen wecker für [time : fünfzehn uhr]'}
+
+#### Instructions
+1. **Listen to the audio file.**
+2. **Identify the intent** of the utterance from the possible intent strings.
+3. **Identify the slots** within the utterance and label them with the appropriate slot types.
+4. **Format your output** as a JSON object with the predicted 'intent_str' and 'annot_utt'.
+
+### Input
+"""

@@ -1,0 +1,31 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - LibriTTS: # same name of the dataset class
+        datapath: ${DATA_HOME}/libritts_s2st_translated
+        task: "S2ST" # one task per dataset, you can duplicate the dataset and change the task
+        languages: ["en"]
+        partitions:
+            train: # the name of the partition of your dataset, could be any name, such as "train-other-500" or "my-custom-partition"
+                amount: ":1%"  # options: ":X%" or "X1:X2%"
+                min_duration: 0.1
+                max_duration: 15
+                destination: "train"
+        additional_args:
+            add_speaker_descriptions: false
+    - CVSS:
+        datapath: ${DATA_HOME}/CVSS_new
+        task: "S2ST"
+        languages: ["de-en", "es-en", "fr-en", "it-en"]
+        partitions:
+            train:
+                amount: ":1%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+        additional_args:
+            add_translation_prefix: false

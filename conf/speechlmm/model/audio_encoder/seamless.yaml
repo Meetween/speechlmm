@@ -1,0 +1,32 @@
+defaults:
+  - _self_
+
+_name_or_path: meetween/seamless-m4t-v2-large-speech-encoder
+adaptor_dropout: 0.1
+adaptor_kernel_size: 8
+adaptor_stride: 8
+add_adapter: true
+architectures:
+  - SeamlessM4Tv2SpeechEncoder
+conv_depthwise_kernel_size: 31
+feature_projection_input_dim: 160
+hidden_size: 1024
+initializer_range: 0.02
+layer_norm_eps: 1.0e-05
+left_max_position_embeddings: 64
+model_type: seamless_m4t_v2
+num_adapter_layers: 1
+position_embeddings_type: relative_key
+right_max_position_embeddings: 8
+speech_encoder_attention_heads: 16
+speech_encoder_chunk_size: 20000
+speech_encoder_dropout: 0.0
+speech_encoder_hidden_act: swish
+speech_encoder_intermediate_size: 4096
+speech_encoder_layerdrop: 0.1
+speech_encoder_layers: 24
+speech_encoder_left_chunk_num: 128
+torch_dtype: float32
+transformers_version: 4.37.2
+use_cache: true
+sampling_rate: 16000

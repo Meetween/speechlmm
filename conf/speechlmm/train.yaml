@@ -1,0 +1,163 @@
+defaults:
+  - _self_
+  - base
+  - model/audio_encoder: null
+  - model/audio_adapter: null
+  - model/text_decoder: null
+  - model/codec_encoder: null
+  - model/codec_decoder: null
+  - model/backfeeding_audio_adapter: null
+  - model/conditioning_audio_adapter: null
+  - model/talking_head: null
+  - model/video_encoder: null
+  - model/video_adapter: null
+  - training_setting: ???
+
+# hydra:
+#   run:
+#     dir: outputs/${hydra.sweep.subdir}
+#   sweep:
+#     subdir: ${model.audio_encoder.model_type}__${model.audio_adapter.model_type}__${model.text_decoder.model_type}__${stem:${data.data_config_path}}__${now:%Y-%m-%d}_${now:%H-%M-%S}
+
+training_type: ???
+wandb_project: ???
+wandb_watch: "false"
+num_gpus: 0
+num_nodes: 0
+accelerate_config: ${oc.env:SPEECHLMM_ROOT}/conf/accelerate/deepspeed.yaml
+deepspeed_config: ${oc.env:SPEECHLMM_ROOT}/conf/deepspeed/zero3.json
+adjustments: []
+
+data:
+  # Dataloader
+  data_config_path: ???
+  num_proc_for_preprocessing: 16
+  dataloader_debug: false
+  filter_broken_samples: false
+  organize_eval_dataset_per_task: true
+  group_dataset_by_task:
+    train: false
+    eval: false
+    test: false
+  task_weights: null
+  multi_task_sampler: "random"
+  replacement: true
+  rebuild_dataset_cache: false
+  cache_final_datasets: true
+  # Audio
+  audio_input_sampling_rate: null
+  codec_sampling_rate: null
+  codec_frame_rate: null
+  # Vision
+  image_folder: null
+  image_aspect_ratio: square
+  # Miscellaneous
+  is_multimodal: false
+  lazy_preprocess: true  # TODO(anferico): if unused, remove
+  align_text_to_audio: false
+  use_text_tokens: true
+  align_with_whisper: false
+  restore_punctuation_and_spaces: true
+  max_condition_audio_duration: 10
+  variable_batch_size: false
+  max_length_per_batch: null
+
+model:
+  add_lm_head: true
+  vision_select_layer: -1
+  vision_use_patch_token: true
+  vision_patch_merge_type: flat
+  vision_select_feature: patch
+  mm_use_im_start_end: false
+  mm_use_audio_start_end: false
+  use_audio_encoder_as_codec_encoder: false
+  add_all_multimodal_tokens: true
+  perturb_codes: true
+  perturb_prob: 0.2
+  pad_audio_weight: 0.5
+  epad_audio_weight: 1
+  pad_epad_audio_weight_decay: 0.5 # pad_audio_weight * (1 - t/T)^pad_audio_weight_decay
+  perturb_prob_decay: 0.5 # perturb_prob * (1 - t/T)^perturb_prob_decay
+  conversation_version: llama_3_1
+  codebook_weights: [1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1] # up to 32 codebooks
+  chunk_size_in_seconds: null  # for audio encoder
+  chunk_overlap_in_seconds: 0  # for audio encoder
+  chunk_encoding_strategy: loop  # [batch, loop]
+  audio_loss_decay: 1
+  audio_loss_weight: 1
+training:
+  # -------------------------
+  # Custom training arguments
+  # -------------------------
+  # Multimodality
+  modality: audio
+  group_by_modality_length: false
+  # Quantization / precision
+  load_in_4bit: false
+  load_in_8bit: false
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_use_double_quant: true
+  # LoRA
+  lora_adapters: []
+  # LR scheduler
+  num_steps_between_each_restart: null
+  lr_min: 1.0e-6
+  # Evaluation
+  eval_temperature: 0
+  eval_max_new_tokens: 200
+  eval_num_batched_generations: 4
+  # Miscellaneous
+  cache_dir: null
+  resume_from_checkpoint: null
+  model_max_length: 2048
+  freeze_modules:
+    - audio_encoder
+    - video_encoder
+    - vision_encoder
+    - text_decoder
+    - codec_encoder
+    - codec_decoder
+  attn_implementation: flash_attention_2
+  mpt_attn_impl: triton
+  mm_projector_lr: null
+  # ---------------------------------------
+  # Native Hugging Face `TrainingArguments`
+  # ---------------------------------------
+  # Output
+  output_dir: ???
+  report_to: wandb
+  run_name: ???
+  # Hyperparameters
+  num_train_epochs: 1
+  max_steps: -1
+  per_device_train_batch_size: 8
+  per_device_eval_batch_size: 8
+  gradient_accumulation_steps: 1
+  gradient_checkpointing: true
+  optim: adamw_torch
+  learning_rate: 1.0e-4
+  weight_decay: 0.0
+  lr_scheduler_type: cosine
+  warmup_ratio: 0.03
+  # Logging / saving / evaluation
+  logging_steps: 1
+  save_strategy: steps
+  save_steps: 1000
+  save_total_limit: 10
+  eval_strategy: steps
+  eval_steps: 1000
+  # Hugging Face hub
+  push_to_hub: false
+  hub_model_id: null
+  hub_strategy: end
+  hub_token: null
+  hub_private_repo: false
+  # Precision
+  fp16: false
+  bf16: true
+  tf32: true
+  # Miscellaneous
+  dataloader_num_workers: 8
+  remove_unused_columns: false
+  seed: 42
+  pretrained_checkpoint: null

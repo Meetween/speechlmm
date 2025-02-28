@@ -1,0 +1,8 @@
+defaults:
+  - /model/audio_adapter/@audio_adapter: qformer
+  - _self_
+
+model_type: features
+audio_adapter:
+  compress_factor: 4
+  hop_size: .25

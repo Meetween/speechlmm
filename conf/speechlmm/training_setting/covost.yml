@@ -1,0 +1,17 @@
+# @package _global_
+
+defaults:
+  - _self_
+
+wandb_project: asr-st-only-covost
+
+
+training:
+  per_device_train_batch_size: 20
+  num_train_epochs: 3
+  save_steps: 1000
+
+data:
+  num_proc_for_preprocessing: 32
+  align_text_to_audio: none
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/covost.yml

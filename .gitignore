@@ -1,0 +1,56 @@
+# Python
+__pycache__
+*.pyc
+*.egg-info
+dist
+
+# Log
+*.log
+*.log.*
+*.json
+*.jsonl
+!zero*.json
+!conf/huggingface/*.json
+!PRETRAIN_QUESTIONS_LIST.json
+!INPUTS_TEXT_LIST.json
+!OUTPUTS_TEXT_LIST.json
+
+# Data
+!**/alpaca-data-conversation.json
+**/samples_from_dataset
+
+# Editor
+.idea
+*.swp
+
+# Other
+.DS_Store
+wandb
+output
+
+checkpoints
+ckpts*
+
+.ipynb_checkpoints
+*.ipynb
+
+# DevContainer
+!.devcontainer/*
+
+# Demo
+serve_images/
+
+data/
+
+*.stdout
+*.stderr
+
+# Build
+build/
+
+# Hydra
+outputs/
+multirun/
+
+# DeepSpeed
+.deepspeed_env

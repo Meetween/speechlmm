@@ -1,0 +1,8 @@
+Q: "What was the main focus of the product design?"
+A: "<0.0> <6.0> The main focus of the product design was to create something that was both functional and aesthetically pleasing, and this information is available from <0.0> to <6.0>."
+
+Q: "What approach did the team take to gather feedback on the design?"
+A: "<22.0> <28.0> The team gathered feedback through surveys and interviews to refine the design. The speaker mentions this from <22.0> to <28.0>."
+
+Q: "What is the specific technology used in the final product?"
+A: "The specific technology used in the final product is not mentioned in the audio clip."

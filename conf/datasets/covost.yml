@@ -1,0 +1,26 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+    - CoVoST:
+        datapath: ${DATA_HOME}/CoVoST/preprocessed
+        task: "ASR"
+        languages: ["en-de", "fr-en", "it-en", "de-en", "es-en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+    - CoVoST:
+        datapath: ${DATA_HOME}/CoVoST/preprocessed
+        task: "ST"
+        languages: ["en-de", "fr-en", "it-en", "de-en", "es-en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"

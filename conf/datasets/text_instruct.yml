@@ -1,0 +1,48 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    # - Alpaca:
+    #     datapath: ${DATA_HOME}/alpaca
+    #     task: "TextInstruct"
+    #     languages: ["en"]
+    #     partitions:
+    #         train:
+    #             amount: ":2%"
+    #             destination: "train"
+    # - HelpfulInstructions:
+    #     datapath: ${DATA_HOME}/helpful_instructions
+    #     task: "TextInstruct"
+    #     languages: ["en"]
+    #     partitions:
+    #         train:
+    #             amount: ":2%"
+    #             destination: "train
+    # - GradeSchoolMathInstructions:
+    #     datapath: ${DATA_HOME}/grade-school-math-instructions
+    #     task: "TextInstruct"
+    #     languages: ["en"]
+    #     partitions:
+    #         train:
+    #             amount: ":2%"
+    #             destination: "train"
+    # - DatabricksDolly15k:
+    #     datapath: ${DATA_HOME}/databricks-dolly-15k
+    #     task: "TextInstruct"
+    #     languages: ["en"]
+    #     partitions:
+    #         train:
+    #             amount: ":2%"
+    #             destination: "train"
+
+    - EverythingInstructMultilingual:
+        datapath: ${DATA_HOME}/everything_instruct_multilingual
+        task: "TextInstruct"
+        languages: ["en"]
+        partitions:
+            train:
+                amount: ":100%"
+                destination: "train"

@@ -1,0 +1,69 @@
+# @package _global_
+
+defaults:
+  - _self_
+
+wandb_project: speechlmm
+deepspeed_config: ${oc.env:SPEECHLMM_ROOT}/conf/deepspeed/zero2_custom.json
+
+data:
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/libritts_r.yml
+  rebuild_dataset_cache: false
+  num_proc_for_preprocessing: 32
+
+  align_text_to_audio: true
+  align_with_whisper: false
+
+training:
+  per_device_train_batch_size: 12
+  gradient_accumulation_steps: 8
+  save_steps: 2500
+  save_total_limit: 10
+  num_train_epochs: 10
+  eval_steps: 1000
+  eval_strategy: "no"
+  eval_num_batched_generations: 1
+  attn_implementation: flash_attention_2
+  dataloader_num_workers: 0
+
+  learning_rate: 2.0e-5
+
+  freeze_modules:
+    - codec_encoder
+    - codec_decoder
+    - text_decoder
+
+  group_by_modality_length: false
+  report_to: wandb
+
+model:
+  add_all_multimodal_tokens: true
+
+  perturb_prob: 0.2
+  pad_audio_weight: 0.5
+  epad_audio_weight: 1
+  pad_epad_audio_weight_decay: 0.5
+  perturb_prob_decay: 0.5
+
+  backfeeding_audio_adapter:
+    audio_adapter:
+      hidden_layers: 4
+
+  conditioning_audio_adapter:
+    num_hidden_layers: 4
+    compress_factor: 12
+    num_queries: 4
+
+  talking_head:
+    depformer_num_layers: 8
+
+
+# python speechlmm/train/train_hydra.py \
+#     --config-name pretrain \
+#     model/codec_encoder=mimi \
+#     model/codec_decoder=mimi \
+#     model/backfeeding_audio_adapter=features \
+#     model/conditioning_audio_adapter=qformer \
+#     model/text_decoder=llama_3_8b \
+#     model/talking_head=moshi_bert \
+#     training_setting=delivarable/speechlmm_in_out_warmup

@@ -1,0 +1,58 @@
+# @package _global_
+
+defaults:
+  - _self_
+
+wandb_project: moshi
+deepspeed_config: ${oc.env:SPEECHLMM_ROOT}/conf/deepspeed/zero2_custom.json
+
+data:
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/libritts_r.yml
+  align_text_to_audio: false
+  align_with_whisper: false
+  rebuild_dataset_cache: false
+
+
+training:
+  per_device_train_batch_size: 20
+  save_steps: 2500
+  save_total_limit: 20
+  num_train_epochs: 10
+  eval_steps: 0
+  eval_strategy: "no"
+  attn_implementation: flash_attention_2
+  dataloader_num_workers: 0 # to avoid error w. whisper inference: RuntimeError: Cannot re-initialize CUDA in forked subprocess. To use CUDA with multiprocessing, you must use the 'spawn' start method
+  # LoRa settings
+  mm_projector_lr: 8.0e-5
+  learning_rate: 8.0e-5
+  freeze_modules:
+    - codec_encoder
+    - codec_decoder
+    - text_decoder
+  # TODO: fix "AttributeError: 'SpeechLmmDataset' object has no attribute 'modality_lengths'" when `group_by_modality_length` is true
+  group_by_modality_length: false
+  report_to: wandb
+
+model:
+  perturb_prob: 0.2
+  perturb_prob_decay: 0.5 # perturb_prob * (1 - t/T)^perturb_prob_decay
+
+
+  backfeeding_audio_adapter:
+    audio_adapter:
+      hidden_layers: 8
+  conditioning_audio_adapter:
+    num_hidden_layers: 8
+  talking_head:
+    depformer_num_layers: 12
+
+
+# python speechlmm/train/train_hydra.py \
+#     --config-name pretrain \
+#     model/codec_encoder=mimi \
+#     model/codec_decoder=mimi \
+#     model/backfeeding_audio_adapter=features \
+#     model/conditioning_audio_adapter=qformer \
+#     model/text_decoder=llama_3_8b \
+#     model/talking_head=moshi_bert \
+#     training_setting=audio_io/moshi_bert_llm_frozen

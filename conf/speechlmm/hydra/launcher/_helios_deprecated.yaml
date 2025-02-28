@@ -1,0 +1,71 @@
+defaults:
+  # - base_launcher  # restore this
+  - submitit_slurm
+  - _self_
+
+nodes: 1
+cpus_per_task: 256
+mem_gb: 478
+timeout_min: 2880  # 48 hours
+account: plgmeetween2004-gpu-gh200
+partition: plgrid-gpu-gh200
+constraint: localfs
+gres: gpu:4
+setup:
+  - |
+    set -euo pipefail
+
+    export DATA_HOME=$SCRATCH/data
+    export SPEECHLMM_ROOT=$SCRATCH/speechlmm
+    export AUTO_AVSR_CHECKPOINTS=$SCRATCH/auto_avsr_ckpt
+    export CHECKPOINTS_HOME=$SCRATCH/checkpoints
+
+    export VENVS_HOME=$SCRATCH/venvs
+
+    SPEECHLMM_LOCAL_VENV_PATH=$VENVS_HOME/speechlmm-local
+    export PATH=$(echo $PATH | sed -e "s|$(echo $SPEECHLMM_LOCAL_VENV_PATH)/bin:||")
+    unset VIRTUAL_ENV
+
+    MODULESHOME=$(echo $MODULESHOME | sed "s|x86_64|aarch64|g")
+    MODULEPATH=$(echo $MODULEPATH | sed "s|x86_64|aarch64|g")
+    LMOD_ROOT=$(echo $LMOD_ROOT | sed "s|x86_64|aarch64|g")
+    LMOD_PKG=$(echo $LMOD_PKG | sed "s|x86_64|aarch64|g")
+    LMOD_DIR=$(echo $LMOD_DIR | sed "s|x86_64|aarch64|g")
+    LMOD_CMD=$(echo $LMOD_CMD | sed "s|x86_64|aarch64|g")
+
+    module load ML-bundle/24.06a
+
+    source ~/.bashrc
+
+    echo "Cloning virtual environment. This may take a while..."
+
+    OLD_VENV_PATH=$VENVS_HOME/speechlmm
+    source $OLD_VENV_PATH/bin/activate
+    pip freeze > $SCRATCH_LOCAL/requirements.txt
+    deactivate
+
+    mkdir -p $SCRATCH_LOCAL/venvs
+    export NEW_VENV_PATH=$SCRATCH_LOCAL/venvs/speechlmm-copy
+    python -m venv --clear $NEW_VENV_PATH
+
+    source $NEW_VENV_PATH/bin/activate
+
+    pip install --upgrade pip
+
+    sed -i '/@ file/d' $SCRATCH_LOCAL/requirements.txt
+    pip install \
+      --extra-index-url /net/software/aarch64/el8/wheels/ML-bundle/24.06a/simple \
+      --no-deps \
+      -r $SCRATCH_LOCAL/requirements.txt
+
+    pip install $MEETWEEN_SHARED_DIR/custom_wheels/decord-0.6.0-cp311-cp311-linux_aarch64.whl
+    python apply_patches.py
+
+    rsync -a --exclude-from=.gitignore . $SCRATCH_LOCAL/speechlmm
+    pip install --no-deps $SCRATCH_LOCAL/speechlmm
+
+# SLURM executor __init__ kwargs
+# Needed to instruct submitit to use the correct python interpreter for the job, i.e. the one
+# inside the "speechlmm" virtual environment. If we omit this, submitit would use the same interpreter
+# used to launch the job, i.e. the one inside the "speechlmm-local" virtual environment
+python: $NEW_VENV_PATH/bin/python3

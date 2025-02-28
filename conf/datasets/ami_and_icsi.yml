@@ -1,0 +1,31 @@
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+DATA:
+  - AMI:
+      datapath: ${DATA_HOME}/ami_segmented
+      task: SSUM
+      languages:
+        - en
+      partitions:
+        train:
+          amount: ":100%"
+          destination: train
+          max_duration: 240
+        validation:
+          amount: ":100%"
+          destination: eval
+          max_duration: 240
+  - ICSI:
+      datapath: ${DATA_HOME}/icsi_segmented
+      task: SSUM
+      languages:
+        - en
+      partitions:
+        train:
+          amount: ":100%"
+          destination: train
+          max_duration: 240
+        validation:
+          amount: ":100%"
+          destination: eval
+          max_duration: 240

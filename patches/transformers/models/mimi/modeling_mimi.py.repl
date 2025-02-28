@@ -1,0 +1,3 @@
+self.register_buffer("initialized", torch.Tensor([True]));self.initialized = nn.Parameter(torch.tensor([True], dtype=torch.float32), requires_grad=False)
+self.register_buffer("cluster_usage", torch.ones(config.codebook_size));self.cluster_usage = nn.Parameter(torch.ones(config.codebook_size), requires_grad=False)
+self.register_buffer("embed_sum", embed);self.embed_sum = nn.Parameter(embed, requires_grad=False)

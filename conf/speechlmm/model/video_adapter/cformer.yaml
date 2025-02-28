@@ -1,0 +1,9 @@
+defaults:
+  - two_stage
+  - transformer@modality_adapter_after
+  - _self_
+
+model_type: cformer
+modality_adapter_before: null
+modality_adapter_after:
+  num_hidden_layers: 4

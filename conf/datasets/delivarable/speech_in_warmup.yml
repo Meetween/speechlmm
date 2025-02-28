@@ -1,0 +1,50 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - CommonVoice:
+        datapath: ${DATA_HOME}/common_voice_17_0
+        task: "ASR"
+        languages: ["en", "de", "fr", "it", "es"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+            test:
+                amount: ":1%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "eval"
+
+    - CoVoST:
+        datapath: ${DATA_HOME}/CoVoST/preprocessed
+        task: "ST"
+        languages: ["en-de", "fr-en", "it-en", "de-en", "es-en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+            test:
+                amount: ":1%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "eval"
+
+    - Europarl:
+        datapath: ${DATA_HOME}/europarl-ST/preprocessed
+        task: "ST"
+        languages:
+            - "all"
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"

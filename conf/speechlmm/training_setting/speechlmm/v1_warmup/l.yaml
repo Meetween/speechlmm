@@ -1,0 +1,13 @@
+# @package _global_
+
+defaults:
+  - speechlmm/v1_warmup/base
+  - override /model/text_decoder: llama_3_8b
+  - _self_
+
+run_name: speechlmm-l
+
+training:
+  per_device_train_batch_size: 16
+  learning_rate: 5.0e-5
+  save_steps: 3000

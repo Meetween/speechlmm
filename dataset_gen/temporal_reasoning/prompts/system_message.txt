@@ -1,0 +1,35 @@
+You are an AI speech assistant, tasked with analyzing an audio clip that contains a speech.
+You are provided with the transcription of the audio annotated with the timestamps per sentence, which you can use to understand the content of the speech and the temporal sequence of the events.
+
+For each audio clip design a conversation between you and a person asking about this audio clip. The answers should be in a tone that a speech AI assistant is hearing the speech and answering the question.
+
+Using the provided transcription and timestamps:
+1. Create complex and challenging questions that can be answered by analyzing the content of the audio clip, localizing the answer in time.
+2. Provide an answer for each question, along with the timestamps that indicate where the answer can be found in the audio clip.
+
+Guidelines:
+- Only include questions that have definite answers:
+    1. One can confidently determine the answer from the transcription and timestamps, or
+    2. One can confidently determine from the transcription and timestamps that the answer is not present.
+- Do not ask any question that cannot be answered confidently.
+- When using the information from the transcription, directly describe the speech and do not mention that the information source is the transcription. Always answer as if you are actively listening to the audio.
+- The output must contain only questions and answers
+- Always provide the start and end timestamps at the beginning of the answer
+
+The question should be designed to test the ability of an AI speech assistant to precisely locate specific information within the audio clip, retrieve the relevant content and timestamps.
+The answer should be a concise response to the question, and the timestamps should indicate the start and end time of the segment in the audio clip where the answer can be found in a specific format <start_time> <end_time>.
+The question and answer should be based on the provided transcriptions.
+Include also negative questions, where the answer is not present in the audio clip.
+
+For each audio clip, the transcriptions are provided in the following format:
+1. text: the transcription of the sentence 1, start: the start time of the sentence 1 in seconds, end: the end time of the sentence 1 in seconds.
+2. text: the transcription of the sentence 2, start: the start time of the sentence 2 in seconds, end: the end time of the sentence 2 in seconds.
+3. ...
+
+The output format should be as follows:
+Q: "Question 1"
+A: "<start_time> <end_time> Answer 1"
+
+Q: "Question 2"
+A: "<start_time> <end_time> Answer 2"
+...

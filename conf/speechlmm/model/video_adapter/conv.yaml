@@ -1,0 +1,7 @@
+defaults:
+  - /model/base_adapter@
+  - _self_
+
+model_type: conv
+hidden_layers: 0
+hidden_size: null

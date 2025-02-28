@@ -1,0 +1,42 @@
+# @package _global_
+
+defaults:
+  - _self_
+
+wandb_project: asr-st-only-covost
+deepspeed_config: ${oc.env:SPEECHLMM_ROOT}/conf/deepspeed/zero2_custom.json
+
+data:
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/covost.yml
+  rebuild_dataset_cache: false
+
+
+training:
+  per_device_train_batch_size: 20
+  save_steps: 500
+  save_total_limit: 20
+  num_train_epochs: 3
+  eval_steps: 0
+  eval_strategy: "no"
+  attn_implementation: flash_attention_2
+  dataloader_num_workers: 0 # to avoid error w. whisper inference: RuntimeError: Cannot re-initialize CUDA in forked subprocess. To use CUDA with multiprocessing, you must use the 'spawn' start method
+  # LoRa settings
+  mm_projector_lr: 2.0e-4
+  learning_rate: 2.0e-4
+  # TODO: fix "AttributeError: 'SpeechLmmDataset' object has no attribute 'modality_lengths'" when `group_by_modality_length` is true
+  group_by_modality_length: false
+  report_to: wandb
+
+
+model:
+  audio_adapter:
+    num_hidden_layers: 6
+    compress_factor: 2
+
+
+# python speechlmm/train/train_hydra.py \
+#     --config-name pretrain \
+#     model/audio_encoder=seamless \
+#     model/audio_adapter=qformer \
+#     model/text_decoder=llama_3_8b \
+#     training_setting=asr_st_pretraining

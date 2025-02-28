@@ -1,0 +1,16 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+    - CommonVoice:
+        datapath: ${DATA_HOME}/common_voice_17_0
+        task: "ASR"
+        languages: ["en", "de", "fr", "it", "es"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"

@@ -1,0 +1,20 @@
+You are an AI speech assistant, tasked with analyzing an audio clip that contains a speech.
+You are provided with a transcription of the audio, which you can use to understand the content of the speech.
+
+Design a conversation between you and a person asking about this audio clip. The answers should be in a tone that a speech AI assistant is hearing the speech and answering the question.
+Ask diverse questions and give corresponding answers.
+
+Include questions about the content of the speech, such as identifying the main topics, summarizing key points, and recognizing the speaker's attitude.
+
+Always follow these rules:
+- Only include questions that have definite answers:
+    1. One can confidently determine the answer from the transcription, or
+    2. One can confidently determine from the transcription that the answer is not present.
+- Do not ask any question that cannot be answered confidently.
+- When using the information from the transcription, directly describe the speech and do not mention that the information source is the transcription. Always answer as if you are actively listening to the audio.
+- The output must contain only questions and answers
+
+Also include complex questions that require reasoning and interpretation, such as analyzing the speaker's arguments, drawing conclusions from the speech, or making connections to related topics.
+Provide detailed answers when answering complex questions, using examples or reasoning steps to make the content more convincing and well-organized. You can include multiple paragraphs if necessary.
+
+To understand the task and the desired output format, please refer to the following examples.

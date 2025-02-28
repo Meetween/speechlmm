@@ -1,0 +1,543 @@
+{
+    "ASR": {
+        "en": [
+            "Can you transcribe this audio?",
+            "What is being said in this audio?",
+            "Could you provide a transcription of this recording?",
+            "What are the words spoken in this audio?",
+            "Can you write what is spoken in this audio?",
+            "Transcribe the audio.",
+            "Please transcribe the following recording.",
+            "Convert this audio to text.",
+            "Generate a transcript for this audio."
+        ],
+        "fr": [
+            "Pouvez-vous transcrire cet audio ?",
+            "Qu'est-ce qui est dit dans cet audio ?",
+            "Pourriez-vous fournir une transcription de cet enregistrement ?",
+            "Quels sont les mots prononcés dans cet audio ?",
+            "Pouvez-vous écrire ce qui est dit dans cet audio ?",
+            "Transcrivez l'audio.",
+            "Veuillez transcrire l'enregistrement suivant.",
+            "Convertissez cet audio en texte.",
+            "Générez une transcription pour cet audio."
+        ],
+        "de": [
+            "Können Sie dieses Audio transkribieren?",
+            "Was wird in diesem Audio gesagt?",
+            "Könnten Sie bitte eine Transkription dieser Aufnahme liefern?",
+            "Was sind die Wörter, die in diesem Audio gesprochen werden?",
+            "Könnten Sie bitte aufschreiben, was in diesem Audio gesprochen wird?",
+            "Transkribiere das Audio.",
+            "Bitte transkribieren Sie die folgende Aufnahme.",
+            "Konvertiere dieses Audio in Text.",
+            "Erstellen Sie eine Abschrift für dieses Audio."
+        ],
+        "it": [
+            "Puoi trascrivere questo audio?",
+            "Cosa viene detto in questo audio?",
+            "Potresti fornire una trascrizione di questa registrazione?",
+            "Quali sono le parole pronunciate in questo audio?",
+            "Puoi trascrivere ciò che viene detto in questo audio?",
+            "Trascrivi l'audio.",
+            "Per favore, trascrivi la seguente registrazione.",
+            "Trasforma questo audio in testo.",
+            "Crea una trascrizione per questo audio."
+        ],
+        "es": [
+            "¿Podrías transcribir este audio?",
+            "¿Qué se dice en este audio?",
+            "¿Podrías proporcionar una transcripción de esta grabación?",
+            "¿Cuáles son las palabras que se pronuncian en este audio?",
+            "¿Podrías transcribir lo que se dice en este audio?",
+            "Transcribe el audio.",
+            "Por favor, transcribe la siguiente grabación.",
+            "Convierte este audio en texto.",
+            "Crea una transcripción para este audio."
+        ]
+    },
+    "MT": {
+        "en": [
+            "Can you translate this text into <target-language>?",
+            "How would this text look in <target-language>?",
+            "Could you convert this text from <source-language> to <target-language>?",
+            "What is the <target-language> equivalent of this sentence?",
+            "How do you express this in <target-language>?",
+            "Translate this text into <target-language>.",
+            "Please rewrite this text in <target-language>.",
+            "Convert this text from <source-language> to <target-language>.",
+            "Provide a <target-language> translation for this text."
+        ],
+        "fr": [
+            "Pouvez-vous traduire ce texte en <target-language> ?",
+            "À quoi ressemblerait ce texte en <target-language> ?",
+            "Pourriez-vous convertir ce texte de <source-language> en <target-language> ?",
+            "Quel est l'équivalent en <target-language> de cette phrase ?",
+            "Comment exprimez-vous cela en <target-language> ?",
+            "Traduisez ce texte en <target-language>.",
+            "Veuillez réécrire ce texte en <target-language>.",
+            "Convertissez ce texte de <source-language> en <target-language>.",
+            "Fournissez une traduction en <target-language> pour ce texte.",
+            "Translate this text into <target-language>."
+        ],
+        "de": [
+            "Könnten Sie diesen Text bitte in <target-language> übersetzen?",
+            "Wie würde dieser Text in <target-language> aussehen?",
+            "Könnten Sie diesen Text von <source-language> in <target-language> übersetzen?",
+            "Wie lautet die <target-language>-Entsprechung dieses Satzes?",
+            "Wie drückt man das in <target-language> aus?",
+            "Übersetzen Sie diesen Text ins <target-language>.",
+            "Bitte übersetzen Sie diesen Text in <target-language>.",
+            "Übersetzen Sie diesen Text aus dem <source-language> in das <target-language>."
+        ],
+        "it": [
+            "Puoi tradurre questo testo in <target-language>?",
+            "Come sarebbe questo testo in <target-language>?",
+            "Potresti tradurre questo testo da <source-language> a <target-language>?",
+            "Qual è la traduzione in <target-language> di questa frase?",
+            "Come si esprime questo concetto in <target-language>?",
+            "Traduci questo testo in <target-language>.",
+            "Per favore, riscrivi questo testo in <target-language>.",
+            "Traduci questo testo da <source-language> a <target-language>.",
+            "Fornisci una traduzione in <target-language> per questo testo.",
+            "Traduci questo testo in <target-language>."
+        ],
+        "es": [
+            "¿Podrías traducir este texto al <target-language>?",
+            "¿Cómo se vería este texto en <target-language>?",
+            "¿Podrías traducir este texto del <source-language> al <target-language>?",
+            "¿Cuál es la traducción en <target-language> de esta frase?",
+            "¿Cómo se expresa este concepto en <target-language>?",
+            "Traduce este texto al <target-language>.",
+            "Por favor, vuelve a escribir este texto en <target-language>.",
+            "Traduce este texto del <source-language> al <target-language>.",
+            "Proporciona una traducción en <target-language> para este texto.",
+            "Traduce este texto al <target-language>."
+        ]
+    },
+    "ST": {
+        "en": [
+            "Can you translate this audio from <source-language> to <target-language>?",
+            "What is being said in this audio? Can you provide a translation into <target-language>?",
+            "Could you transcribe and translate this audio into <target-language>?",
+            "How would you translate this audio into <target-language>?",
+            "Can you convert the speech in this audio to <target-language>?",
+            "Translate the speech from <source-language> to <target-language>.",
+            "Please provide a translation of this audio into <target-language>.",
+            "Transcribe and translate this audio into <target-language>.",
+            "Provide a translation of this audio recording into <target-language>."
+        ],
+        "fr": [
+            "Pouvez-vous traduire cet audio de <source-language> vers <target-language> ?",
+            "Qu'est-ce qui est dit dans cet audio ? Pouvez-vous fournir une traduction en <target-language> ?",
+            "Pourriez-vous transcrire et traduire cet audio en <target-language> ?",
+            "Comment traduiriez-vous cet audio en <target-language> ?",
+            "Pouvez-vous convertir la parole dans cet audio en <target-language> ?",
+            "Traduisez le discours de <source-language> vers <target-language>.",
+            "Veuillez fournir une traduction de cet audio en <target-language>.",
+            "Transcrivez et traduisez cet audio en <target-language>.",
+            "Fournissez une traduction de cet enregistrement audio en <target-language>."
+        ],
+        "de": [
+            "Können Sie dieses Audio von <source-language> in <target-language> übersetzen?",
+            "Was wird in diesem Audio gesagt? Könnten Sie eine Übersetzung ins <target-language> liefern?",
+            "Könnten Sie dieses Audio transkribieren und in <target-language> übersetzen?",
+            "Wie würden Sie dieses Audio in <target-language> übersetzen?",
+            "Könnten Sie die Sprache in diesem Audio in <target-language> umwandeln?",
+            "Übersetzen Sie die Rede von <source-language> in <target-language>.",
+            "Bitte übersetzen Sie dieses Audio in <target-language>.",
+            "Transkribiere und übersetze dieses Audio in <target-language>.",
+            "Bitte übersetzen Sie diese Audioaufnahme in <target-language>."
+        ],
+        "it": [
+            "Puoi tradurre questo audio da <source-language> a <target-language>?",
+            "Cosa viene detto in questo audio? Puoi tradurre questo testo in <target-language>?",
+            "Potresti trascrivere e tradurre questo audio in <target-language>?",
+            "Come tradurresti questo audio in <target-language>?",
+            "Puoi tradurre il discorso in questo audio in <target-language>?",
+            "Traduci il discorso da <source-language> a <target-language>.",
+            "Si prega di fornire una traduzione di questo audio in <target-language>.",
+            "Trascrivere e tradurre questo audio in <target-language>.",
+            "Fornisci una traduzione di questa registrazione audio in <target-language>."
+        ],
+        "es": [
+            "¿Podrías traducir este audio del <source-language> al <target-language>?",
+            "¿Qué se dice en este audio? ¿Podrías traducir este texto al <target-language>?",
+            "¿Podrías transcribir y traducir este audio al <target-language>?",
+            "¿Cómo traducirías este audio al <target-language>?",
+            "¿Podrías traducir el discurso de este audio al <target-language>?",
+            "Traduce el discurso del <source-language> al <target-language>.",
+            "Por favor, proporcione una traducción de este audio al <target-language>.",
+            "Transcribe y traduce este audio al <target-language>.",
+            "Proporciona una traducción de esta grabación de audio al <target-language>."
+        ]
+    },
+    "NEGATIVE": {
+        "en": [
+            "What's the capital of France?",
+            "..."
+        ],
+        "fr": [
+            "Quelle est la capitale de la France?",
+            "..."
+        ],
+        "it": [
+            "Qual è la capitale della Francia?",
+            "..."
+        ],
+        "es": [
+            "¿Cuál es la capital de Francia?",
+            "..."
+        ],
+        "de": [
+            "Was ist die Hauptstadt von Frankreich?",
+            "..."
+        ]
+    },
+    "SLU": {
+        "en": {
+            "task_explanation": "You are tasked with understanding spoken utterances in a given language.\nGiven an audio file of a spoken utterance, you need to understand:\n 1. The intent of the utterance, which describes the overall goal or action desired.\n 2. The slots within the utterance, which are key pieces of information relevant to the intent.\nThe possible intent strings and slot types you can choose from are listed below:",
+            "input_format": "Spoken utterance: <spoken_utterance>\nLanguage of the spoken utterance: <language>",
+            "output_format": "<intent_string>\n<annotated_utterance>",
+            "output_format_version": 3,
+            "example_input_transcription": "stelle einen wecker für fünfzehn uhr",
+            "example_output": "alarm_set\nstelle einen wecker für [time : fünfzehn uhr]",
+            "instructions": [
+                "Listen to the audio file.",
+                "Identify the intent of the utterance by picking one of the possible intent strings from the list above.",
+                "Identify the slots within the utterance and label them with the appropriate slot types.",
+                "Format your output as illustrated above."
+            ]
+        }
+    },
+    "SLU_INTENT_ONLY": {
+        "en": {
+            "task_explanation": "You are tasked with understanding spoken utterances in a given language.\nGiven an audio file of a spoken utterance, you need to understand the intent of the utterance, which describes the overall goal or action desired.\nThe possible intent strings you can choose from are listed below:",
+            "input_format": "Spoken utterance: <spoken_utterance>\nLanguage of the spoken utterance: <language>",
+            "output_format": "<intent_string>",
+            "output_format_version": 3,
+            "example_input_transcription": "stelle einen wecker für fünfzehn uhr",
+            "example_output": "alarm_set",
+            "instructions": [
+                "Listen to the audio file.",
+                "Identify the intent of the utterance by picking one of the possible intent strings from the list above.",
+                "Include only the predicted intent string in your output, and nothing else."
+            ]
+        }
+    },
+    "SQA": {
+        "en": [
+            "Answer the question below based solely on the context provided in the audio. Your answer must be concise and grounded in the context (you must NEVER include any information that is not provided in the context in your answer). Here is the question:\n<question>",
+            "Can you answer the question below given the context provided in the audio? Answer concisely and do NOT include any information that cannot be found in the context. Here is the question:\n<question>"
+        ]
+    },
+    "TTS": {
+        "en": [
+            "Can you generate speech from this text? <sentence>",
+            "Given the sentence <sentence>, can you create generated speech?",
+            "<sentence> is the text. Can you convert it to speech?",
+            "Can you read out loud this text? <sentence>",
+            "How would you pronounce this text? <sentence>",
+            "Generate an audio from this text: <sentence>.",
+            "Please read out loud the following text: <sentence>.",
+            "You are given the text <sentence>. Can you read it out loud?",
+            "How would this phrase sound? <sentence>.",
+            "I would like to hear this <sentence> from you."
+        ],
+        "fr": [
+            "Pouvez-vous générer une parole à partir de ce texte ? <sentence>",
+            "Compte tenu de la phrase <sentence>, pouvez-vous créer un discours généré ?",
+            "<sentence> est le texte. Pouvez-vous le convertir en parole ?",
+            "Pouvez-vous lire ce texte à haute voix ? <sentence>",
+            "Comment prononceriez-vous ce texte ? <sentence>",
+            "Générez un fichier audio à partir de ce texte : <sentence>.",
+            "Veuillez lire à haute voix le texte suivant : <sentence>.",
+            "On vous donne le texte <sentence>. Pouvez-vous le lire à haute voix ?",
+            "Comment cette phrase sonnerait-elle ? <sentence>.",
+            "J'aimerais entendre cette <sentence> de votre part."
+        ],
+        "de": [
+            "Können Sie aus diesem Text eine Sprachausgabe erstellen? <sentence>",
+            "Können Sie aus dem Satz <sentence> eine Sprachausgabe erstellen?",
+            "<sentence> ist der Text. Können Sie es in Sprache umwandeln?",
+            "Können Sie diesen Text laut vorlesen? <sentence>",
+            "Wie würden Sie diesen Text aussprechen? <sentence>",
+            "Erstellen Sie ein Audio aus diesem Text: <sentence>.",
+            "Bitte lesen Sie den folgenden Text laut vor: <sentence>.",
+            "Sie erhalten den Text <sentence>. Könnten Sie das laut vorlesen?",
+            "Wie würde dieser Satz klingen? <sentence>",
+            "Ich würde gerne hören, wie Sie diesen <sentence> aussprechen."
+        ],
+        "it": [
+            "Puoi generare un audio da questo testo? <sentence>",
+            "<sentence> Puoi creare un audio a partire da questa frase?",
+            "<sentence> è il testo. Puoi trasformarlo in un audio?",
+            "Puoi leggere ad alta voce questo testo? <sentence>",
+            "Come si pronuncia questo testo? <sentence>",
+            "Genera un audio da questo testo: <sentence>.",
+            "Per favore, leggi ad alta voce il seguente testo: <sentence>.",
+            "Ti viene fornito il testo <sentence>. Puoi leggerlo ad alta voce?",
+            "Come suonerebbe questa frase? <sentence>",
+            "Mi piacerebbe sentire questa frase da te."
+        ],
+        "es": [
+            "¿Puedes generar un audio a partir de este texto? <sentence>",
+            "<sentence> ¿Puedes crear un audio a partir de esta frase?",
+            "<sentence> es el texto. ¿Puedes convertirlo en un audio?",
+            "¿Puedes leer este texto en voz alta? <sentence>",
+            "¿Cómo se pronuncia este texto? <sentence>",
+            "Genera un audio a partir de este texto: <sentence>.",
+            "Por favor, lee en voz alta el siguiente texto: <sentence>.",
+            "Se te proporciona el texto <sentence>. ¿Puedes leerlo en voz alta?",
+            "¿Cómo sonaría esta frase? <sentence>",
+            "Me gustaría escuchar esta frase de ti."
+        ]
+    },
+    "S2ST": {
+        "en": [
+            "Can you translate this audio from <source-language> into <target-language>?",
+            "What does this audio say? Can you provide a <target-language> translation?",
+            "Could you transcribe and translate this audio from <source-language> into <target-language>?",
+            "How would you translate this audio into <target-language>?",
+            "Can you convert the speech in this audio to <target-language>?",
+            "Translate the speech from <source-language> to <target-language>.",
+            "Please convert the speech in <source-language> to <target-language>.",
+            "Provide a <target-language> translation of this audio recording.",
+            "Transcribe and translate this audio into <target-language>.",
+            "Translate this audio into <target-language>, please."
+        ],
+        "fr": [
+            "Pouvez-vous traduire cet audio de <source-language> en <target-language> ?",
+            "Que dit cet audio ? Pouvez-vous fournir une traduction en <target-language> ?",
+            "Pourriez-vous transcrire et traduire cet audio de <source-language> en <target-language> ?",
+            "Comment traduiriez-vous cet audio en <target-language> ?",
+            "Pouvez-vous convertir la parole dans cet audio en <target-language> ?",
+            "Traduisez le discours de <source-language> vers <target-language>.",
+            "Veuillez convertir le discours en <source-language> en <target-language>.",
+            "Fournissez une traduction en <target-language> de cet enregistrement audio.",
+            "Transcrivez et traduisez cet audio en <target-language>.",
+            "Veuillez traduire cet audio en <target-language>."
+        ],
+        "de": [
+            "Können Sie dieses Audio von <source-language> in <target-language> übersetzen?",
+            "Was sagt dieses Audio aus? Könnten Sie eine Übersetzung in <target-language> anbieten?",
+            "Könnten Sie dieses Audio von <source-language> in <target-language> transkribieren und übersetzen?",
+            "Wie würden Sie dieses Audio in <target-language> übersetzen?",
+            "Könnten Sie die Sprache in diesem Audio in <target-language> umwandeln?",
+            "Übersetzen Sie die Rede von <source-language> in <target-language>.",
+            "Bitte übersetzen Sie die Rede von <source-language> in <target-language>.",
+            "Bitte liefern Sie eine Übersetzung dieser Audioaufnahme in <target-language>.",
+            "Transkribiere und übersetze dieses Audio in <target-language>.",
+            "Bitte übersetzen Sie dieses Audio in <target-language>."
+        ],
+        "it": [
+            "Puoi tradurre questo audio da <source-language> a <target-language>?",
+            "Cosa dice questo audio? Puoi fornire una traduzione in <target-language>?",
+            "Potresti trascrivere e tradurre questo audio da <source-language> a <target-language>?",
+            "Come tradurresti questo audio in <target-language>?",
+            "Puoi tradurre il discorso in questo audio in <target-language>?",
+            "Traduci il discorso dal <source-language> al <target-language>.",
+            "Per favore, traduci il discorso in <source-language> in <target-language>.",
+            "Fornisci una traduzione in <target-language> di questa registrazione audio.",
+            "Trascrivere e tradurre questo audio in <target-language>.",
+            "Traduci questo audio in <target-language>, per favore."
+        ],
+        "es": [
+            "¿Podrías traducir este audio del <source-language> al <target-language>?",
+            "¿Qué dice este audio? ¿Podrías proporcionar una traducción en <target-language>?",
+            "¿Podrías transcribir y traducir este audio de <source-language> a <target-language>?",
+            "¿Cómo traducirías este audio al <target-language>?",
+            "¿Podrías traducir el discurso de este audio al <target-language>?",
+            "Traduce el discurso del <source-language> al <target-language>.",
+            "Por favor, traduce el discurso en <source-language> a <target-language>.",
+            "Proporciona una traducción en <target-language> de esta grabación de audio.",
+            "Transcribe y traduce este audio al <target-language>.",
+            "Por favor, traduce este audio al <target-language>."
+        ]
+    },
+    "SSUM": {
+        "en": [
+            "Can you summarize this audio?",
+            "What is the summary of this audio?",
+            "Could you provide a summary of this audio recording?",
+            "How would you summarize this audio?",
+            "What are the key points of this audio?",
+            "Summarize the audio.",
+            "Please summarize this audio recording.",
+            "Write out the summary of this audio.",
+            "Provide a summary of this audio.",
+            "Summarize the contents of this audio clip."
+        ],
+        "fr": [
+            "Pouvez-vous résumer cet audio ?",
+            "Quel est le résumé de cet enregistrement audio ?",
+            "Pourriez-vous fournir un résumé de cet enregistrement audio ?",
+            "Comment résumeriez-vous cet audio ?",
+            "Quels sont les points clés de cet audio ?",
+            "Résumez l'audio.",
+            "Veuillez résumer cet enregistrement audio.",
+            "Rédigez le résumé de cet enregistrement audio.",
+            "Fournissez un résumé de cet audio.",
+            "Résumez le contenu de ce clip audio."
+        ],
+        "de": [
+            "Könnten Sie dieses Audio zusammenfassen?",
+            "Was ist die Zusammenfassung dieses Audios?",
+            "Könnten Sie bitte eine Zusammenfassung dieser Audioaufnahme geben?",
+            "Wie würden Sie dieses Audio zusammenfassen?",
+            "Was sind die wichtigsten Punkte in diesem Audio?",
+            "Fassen Sie das Audio zusammen.",
+            "Bitte fassen Sie diese Audioaufnahme zusammen.",
+            "Schreiben Sie die Zusammenfassung dieses Audios auf.",
+            "Geben Sie eine Zusammenfassung dieses Audios an.",
+            "Fassen Sie den Inhalt dieses Audioclips zusammen."
+        ],
+        "it": [
+            "Puoi riassumere questo audio?",
+            "Qual è il riassunto di questo audio?",
+            "Potresti fornire un riassunto di questa registrazione audio?",
+            "Come riassumeresti questo audio?",
+            "Quali sono i punti chiave di questo audio?",
+            "Riassumi l'audio in modo semplice e chiaro.",
+            "Per favore, riassumi questa registrazione audio.",
+            "Scrivi il riassunto di questo audio.",
+            "Fornisci un riassunto di questo audio.",
+            "Riassumi il contenuto di questo audio clip."
+        ],
+        "es": [
+            "¿Podrías resumir este audio?",
+            "¿Cuál es el resumen de este audio?",
+            "¿Podrías proporcionar un resumen de esta grabación de audio?",
+            "¿Cómo resumirías este audio?",
+            "¿Cuáles son los puntos clave de este audio?",
+            "Resume el audio de manera sencilla y clara.",
+            "Por favor, resuma esta grabación de audio.",
+            "Escribe un resumen de este audio.",
+            "Proporciona un resumen de este audio.",
+            "Resume el contenido de este audio en pocas palabras."
+        ]
+    },
+    "TSUM": {
+        "en": [
+            "Can you summarize this text?",
+            "What is the summary of this text?",
+            "Could you provide a summary of this text?",
+            "How would you summarize this text?",
+            "What are the key points of this text?",
+            "Summarize the text.",
+            "Please summarize this text.",
+            "Write out the summary of this text.",
+            "Provide a summary of this text.",
+            "Summarize the following text."
+        ],
+        "fr": [
+            "Pouvez-vous résumer ce texte ?",
+            "Quel est le résumé de ce texte ?",
+            "Pourriez-vous fournir un résumé de ce texte ?",
+            "Comment résumeriez-vous ce texte ?",
+            "Quels sont les points clés de ce texte ?",
+            "Résumez le texte.",
+            "Veuillez résumer ce texte.",
+            "Rédigez le résumé de ce texte.",
+            "Fournissez un résumé de ce texte.",
+            "Résumez le texte suivant."
+        ],
+        "de": [
+            "Könnten Sie diesen Text zusammenfassen?",
+            "Was ist die Zusammenfassung dieses Textes?",
+            "Könnten Sie bitte eine Zusammenfassung dieses Textes liefern?",
+            "Wie würden Sie diesen Text zusammenfassen?",
+            "Was sind die wichtigsten Punkte in diesem Text?",
+            "Fassen Sie den Text zusammen.",
+            "Bitte fassen Sie diesen Text zusammen.",
+            "Schreiben Sie die Zusammenfassung dieses Textes auf.",
+            "Bitte fassen Sie diesen Text zusammen.",
+            "Fassen Sie den folgenden Text zusammen."
+        ],
+        "it": [
+            "Puoi riassumere questo testo?",
+            "Qual è il riassunto di questo testo?",
+            "Potresti fornire un riassunto di questo testo?",
+            "Come riassumeresti questo testo?",
+            "Quali sono i punti chiave di questo testo?",
+            "Riassumi il testo in poche parole.",
+            "Per favore, riassumi questo testo in modo semplice e chiaro.",
+            "Scrivi il riassunto di questo testo.",
+            "Fornisci un riassunto di questo testo.",
+            "Riassumi il seguente testo."
+        ],
+        "es": [
+            "¿Podrías resumir este texto?",
+            "¿Cuál es el resumen de este texto?",
+            "¿Podrías proporcionar un resumen de este texto?",
+            "¿Cómo resumirías este texto?",
+            "¿Cuáles son los puntos clave de este texto?",
+            "Resume el texto en pocas palabras.",
+            "Por favor, resuma este texto de manera sencilla y clara.",
+            "Escribe un resumen de este texto.",
+            "Proporciona un resumen de este texto.",
+            "Resume el siguiente texto de manera concisa y clara."
+        ]
+    },
+    "VSR": {
+        "en": [
+            "Can you transcribe this video?",
+            "What is being said in this video?",
+            "Could you provide a transcription of this video recording?",
+            "What are the words spoken in this video?",
+            "Can you write what is spoken in this video?",
+            "Transcribe the video.",
+            "Please transcribe the following video recording.",
+            "Write out the dialogue from this video.",
+            "Convert this video to text.",
+            "Generate a transcript for this video."
+        ],
+        "fr": [
+            "Pouvez-vous transcrire cette vidéo ?",
+            "Qu'est-ce qui est dit dans cette vidéo ?",
+            "Pourriez-vous fournir une transcription de cet enregistrement vidéo ?",
+            "Quels sont les mots prononcés dans cette vidéo ?",
+            "Pouvez-vous écrire ce qui est dit dans cette vidéo ?",
+            "Transcrivez la vidéo.",
+            "Veuillez transcrire l'enregistrement vidéo suivant.",
+            "Écrivez le dialogue de cette vidéo.",
+            "Convertissez cette vidéo en texte.",
+            "Générez une transcription pour cette vidéo."
+        ],
+        "de": [
+            "Könnten Sie dieses Video transkribieren?",
+            "Was wird in diesem Video gesagt?",
+            "Könnten Sie bitte eine Transkription dieser Videoaufnahme bereitstellen?",
+            "Welche Worte werden in diesem Video gesprochen?",
+            "Könnten Sie eine Transkription dieser Videoaufnahme bereitstellen?",
+            "Transkribiere das Video.",
+            "Bitte transkribieren Sie die folgende Videoaufzeichnung.",
+            "Schreiben Sie den Dialog aus diesem Video auf.",
+            "Dieses Video in Text umwandeln.",
+            "Erstellen Sie ein Transkript für dieses Video."
+        ],
+        "it": [
+            "Puoi trascrivere questo video?",
+            "Cosa viene detto in questo video?",
+            "Potresti fornire una trascrizione di questa registrazione video?",
+            "Quali sono le parole pronunciate in questo video?",
+            "Puoi scrivere ciò che viene detto in questo video?",
+            "Trascrivere il video.",
+            "Per favore, trascrivi la seguente registrazione video.",
+            "Trasforma questo video in testo.",
+            "Crea una trascrizione per questo video."
+        ],
+        "es": [
+            "¿Podrías transcribir este vídeo?",
+            "¿Qué se dice en este vídeo?",
+            "¿Podrías proporcionar una transcripción de esta grabación de vídeo?",
+            "¿Qué palabras se pronuncian en este vídeo?",
+            "¿Podrías escribir lo que se dice en este vídeo?",
+            "Transcribe el video.",
+            "Por favor, transcribe la siguiente grabación de video.",
+            "Por favor, escribe el diálogo de este vídeo.",
+            "Convierte este vídeo en texto.",
+            "Crea una transcripción para este vídeo."
+        ]
+    }
+}

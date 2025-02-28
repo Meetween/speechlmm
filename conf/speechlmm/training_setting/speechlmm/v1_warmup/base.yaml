@@ -1,0 +1,43 @@
+# @package _global_
+
+defaults:
+  - override /model/audio_encoder: seamless
+  - override /model/audio_adapter: mlp
+  - override /model/video_encoder: auto_avsr
+  - override /model/video_adapter: mlp
+  - _self_
+
+wandb_project: speechlmm-v1
+
+data:
+  num_proc_for_preprocessing: 64
+  align_text_to_audio: none
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/speechlmm_v1/speechlmm_v1_warmup.yml
+  restore_punctuation_and_spaces: true
+  task_weights:
+    ASR: 0.4
+    ST: 0.4
+    VSR: 0.2
+  multi_task_sampler: alternating
+  replacement: true
+  variable_batch_size: false
+  group_dataset_by_task:
+    train: true
+  max_condition_audio_duration: 5
+
+training:
+  gradient_accumulation_steps: 3
+  save_total_limit: 5
+  num_train_epochs: 1
+  eval_steps: 0
+  eval_strategy: "no"
+  attn_implementation: flash_attention_2
+  dataloader_num_workers: 4
+  freeze_modules:
+    - audio_encoder
+    - video_encoder
+  group_by_modality_length: false
+  report_to: wandb
+
+model:
+  add_all_multimodal_tokens: true

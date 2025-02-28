@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - _self_
+
+wandb_project: debug
+
+data:
+  align_text_to_audio: false
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/debug.yml

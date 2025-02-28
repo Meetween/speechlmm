@@ -1,0 +1,6 @@
+defaults:
+  - _self_
+
+model_type: ???
+input_dim: ???
+output_dim: ???

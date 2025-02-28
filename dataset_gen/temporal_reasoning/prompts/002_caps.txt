@@ -1,0 +1,11 @@
+1. text: "Now when it comes to the design of the product, we wanted to create something that was both functional and aesthetically pleasing.", start: 0.0, end: 6.0
+2. text: "We focused on the user experience and how the product would fit into people's daily lives.", start: 6.0, end: 15.1
+3. text: "Our team conducted extensive research to understand the needs and preferences of our target audience.", start: 15.1, end: 22.0
+4. text: "We gathered feedback through surveys and interviews to refine the design.", start: 22.0, end: 28.0
+5. text: "The final product incorporates the latest technology and innovative features.", start: 28.0, end: 34.0
+6. text: "We are excited to present our work and demonstrate the unique aspects of our design.", start: 34.0, end: 40.0
+7. text: "Let's start with an overview of the key features and functionalities.", start: 40.0, end: 46.0
+8. text: "The product is designed to be user-friendly and intuitive for all users.", start: 46.0, end: 52.0
+9. text: "We have also focused on sustainability and environmental impact in the production process.", start: 52.0, end: 58.0
+10. text: "Our goal is to create a product that enhances people's lives while minimizing our carbon footprint.", start: 58.0, end: 64.0
+11. text: "We believe that good design should be accessible to everyone and contribute to a better future.", start: 64.0, end: 70.0

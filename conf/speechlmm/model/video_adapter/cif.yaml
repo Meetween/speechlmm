@@ -1,0 +1,16 @@
+defaults:
+  - /model/base_adapter@
+  - _self_
+
+model_type: cif
+conv_kernel_size: 3
+conv_stride: 1
+conv_padding: 1
+firing_threshold: 1.0
+residual_threshold: 0.5
+unbound_input_weights: False
+eps: 1.0e-4
+quantity_loss_weight: 1.0
+ctc_loss_weight: 0.0
+ctc_loss_vocab_size: ???
+ctc_loss_blank_id: ???

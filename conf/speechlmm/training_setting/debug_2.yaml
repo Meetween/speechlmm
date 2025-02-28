@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - _self_
+
+wandb_project: debug2
+deepspeed_config: ${oc.env:SPEECHLMM_ROOT}/conf/deepspeed/zero2.json
+
+data:
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/debug2.yml
+
+training:
+  num_train_epochs: 0
+  max_steps: 4
+  save_steps: 2
+  eval_steps: 1
+  eval_strategy: "no"
+  attn_implementation: flash_attention_2

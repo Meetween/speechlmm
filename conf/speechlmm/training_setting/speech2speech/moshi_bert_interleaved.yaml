@@ -1,0 +1,61 @@
+# @package _global_
+
+defaults:
+  - _self_
+
+wandb_project: speech2speech-moshi-bert-interleaved
+deepspeed_config: ${oc.env:SPEECHLMM_ROOT}/conf/deepspeed/zero2_custom.json
+
+data:
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/interleaved.yml
+  align_text_to_audio: true
+  rebuild_dataset_cache: false
+  restore_punctuation_and_spaces: true
+  num_proc_for_preprocessing: 16
+  task_weights:
+    NTP: 0.3333333
+    TTSBase: 0.3333333
+    InterleavedTextAudioNTP: 0.3333333
+  multi_task_sampler: "random"  # or "sequential"
+  replacement: true
+  group_dataset_by_task:
+    train: true
+
+training:
+  per_device_train_batch_size: 8
+  save_steps: 2500
+  save_total_limit: 20
+  num_train_epochs: 3
+  eval_steps: 0
+  eval_strategy: "no"
+  attn_implementation: flash_attention_2
+  dataloader_num_workers: 0 # to avoid error w. whisper inference: RuntimeError: Cannot re-initialize CUDA in forked subprocess. To use CUDA with multiprocessing, you must use the 'spawn' start method
+  mm_projector_lr: 8.0e-5
+  learning_rate: 8.0e-5
+  freeze_modules:
+    - codec_encoder
+    - codec_decoder
+  lora_adapters: []
+  group_by_modality_length: false
+  report_to: wandb
+
+model:
+  backfeeding_audio_adapter:
+    audio_adapter:
+      hidden_layers: 6
+  conditioning_audio_adapter:
+    num_hidden_layers: 6
+  talking_head:
+    depformer_num_layers: 8
+  codebook_weights: [10, 1, 1, 1, 1, 1, 1, 1]
+
+
+# python speechlmm/train/train_hydra.py \
+#     --config-name pretrain \
+#     model/codec_encoder=mimi \
+#     model/codec_decoder=mimi \
+#     model/backfeeding_audio_adapter=features \
+#     model/conditioning_audio_adapter=qformer \
+#     model/text_decoder=llama_3_8b_base \
+#     model/talking_head=moshi_bert \
+#     training_setting=speech2speech/moshi_bert_interleaved

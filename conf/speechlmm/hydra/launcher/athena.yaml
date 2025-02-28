@@ -1,0 +1,32 @@
+defaults:
+  # - base_launcher  # restore this
+  - submitit_slurm
+  - _self_
+
+nodes: 1
+cpus_per_task: 128
+mem_gb: 1000
+timeout_min: 2880  # 48 hours
+account: plgmeetween2025-gpu-a100
+partition: plgrid-gpu-a100
+constraint: localfs
+gres: gpu:8
+setup:
+  - |
+    set -euo pipefail
+
+    export DATA_HOME=$SCRATCH/data
+    export SPEECHLMM_ROOT=$SCRATCH/speechlmm
+    export AUTO_AVSR_CHECKPOINTS=$SCRATCH/auto_avsr_ckpt
+    export CHECKPOINTS_HOME=$SCRATCH/checkpoints
+
+    module load Miniconda3/23.3.1-0
+    eval "$(conda shell.bash hook)"
+    module load CUDA/12.1.1
+
+    mkdir -p $SCRATCH_LOCAL/envs
+    conda create -p $SCRATCH_LOCAL/envs/speechlmm-copy --clone speechlmm
+    conda activate $SCRATCH_LOCAL/envs/speechlmm-copy
+
+    rsync -a --exclude-from=.gitignore . $SCRATCH_LOCAL/speechlmm
+    pip install --no-deps $SCRATCH_LOCAL/speechlmm

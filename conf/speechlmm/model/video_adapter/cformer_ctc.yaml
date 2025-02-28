@@ -1,0 +1,5 @@
+defaults:
+  - two_stage
+  - ctc@length_adapter
+  - cformer
+  - _self_

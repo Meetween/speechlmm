@@ -1,0 +1,187 @@
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+DATA:
+  - CommonVoice:
+      datapath: ${DATA_HOME}/common_voice_17_0
+      task: "ASR"
+      languages: ["en", "de", "fr", "it", "es"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "train"
+
+  - LRS2VideoOnly:
+      datapath: ${DATA_HOME}/LRS2-BBC
+      task: "VSR"
+      languages: ["en"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "train"
+        validation:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "eval"
+
+  - AMI:
+      datapath: ${DATA_HOME}/ami_segmented
+      task: "TSUM"
+      languages: ["en"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: null
+          max_duration: 240
+          destination: "train"
+
+  - ICSI:
+      datapath: ${DATA_HOME}/icsi_segmented
+      task: "TSUM"
+      languages: ["en"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: null
+          max_duration: 240
+          destination: "train"
+
+  - AMI:
+      datapath: ${DATA_HOME}/ami_segmented
+      task: "SSUM"
+      languages: ["en"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: null
+          max_duration: 240
+          destination: "train"
+
+  - ICSI:
+      datapath: ${DATA_HOME}/icsi_segmented
+      task: "SSUM"
+      languages: ["en"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: null
+          max_duration: 240
+          destination: "train"
+
+  - LibriTTS:
+      datapath: ${DATA_HOME}/parler_tts/LibriTTS-R-Filtered
+      task: "TTS"
+      languages: ["en"]
+      partitions:
+        train_clean_100:
+          amount: ":100%"
+          destination: "train"
+        train_clean_360:
+          amount: ":100%"
+          destination: "train"
+        train_other_500:
+          amount: ":100%"
+          destination: "train"
+      additional_args:
+        add_speaker_descriptions: false
+
+  - SpokenSQuAD:
+      datapath: ${DATA_HOME}/Spoken-SQuAD/preprocessed
+      task: SQA
+      languages: ["en"]
+      partitions:
+        train:
+          amount: ":100%"
+          destination: train
+          max_duration: 150  # 2.5 minutes
+
+  - CoVoST:
+      datapath: ${DATA_HOME}/CoVoST/preprocessed
+      task: "ST"
+      languages: ["en-de", "fr-en", "it-en", "de-en", "es-en"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "train"
+
+  - Europarl:
+      datapath: ${DATA_HOME}/europarl-ST/preprocessed
+      task: "ST"
+      languages: ["all"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "train"
+
+  - Europarl:
+      datapath: ${DATA_HOME}/europarl-ST/preprocessed
+      task: "MT"
+      languages: ["all"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "train"
+
+  - EverythingInstructMultilingual:
+      datapath: ${DATA_HOME}/everything_instruct_multilingual
+      task: "TextInstruct"
+      languages: ["en"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_num_words: null
+          max_num_words: 200
+          destination: "train"
+
+  - SpeechMassive:
+      datapath: ${DATA_HOME}/SpeechMassive-HF
+      task: SLU_INTENT_ONLY
+      languages: ["de", "fr"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "train"
+        validation:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "eval"
+
+  # - SpeechMassive:
+  #     datapath: ${DATA_HOME}/SpeechMassive-HF
+  #     task: SLU_INTENT_ONLY
+  #     languages: ["es"]
+  #     partitions:
+  #       validation:
+  #         amount: ":100%"
+  #         min_duration: 0.1
+  #         max_duration: 30
+  #         destination: "eval"
+
+  - Slurp:
+      datapath: ${DATA_HOME}/slurp
+      task: SLU_INTENT_ONLY
+      languages: ["en"]
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "train"
+        dev:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "eval"

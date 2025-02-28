@@ -1,0 +1,25 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: speechlmm/dataset/OUTPUTS_TEXT_LIST.json
+INPUTS_TEXT_LIST: speechlmm/dataset/INPUTS_TEXT_LIST.json
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - LibriTTS: # same name of the dataset class
+        datapath: ${DATA_HOME}/parler_tts/LibriTTS-R-Filtered
+        task: "TTS"
+        languages:
+          - en
+        partitions:
+            train_clean_100:
+                amount: :100%
+                destination: train
+            train_clean_360:
+                amount: :100%
+                destination: train
+            train_other_500:
+                amount: :100%
+                destination: train
+        additional_args:
+            add_speaker_descriptions: true
+            caption_only: true

@@ -1,0 +1,10 @@
+defaults:
+  - /model/base_adapter@
+  - _self_
+
+model_type: ctc
+ctc_loss_vocab_size: ???
+ctc_loss_blank_id: ???
+ctc_loss_weight: 0.1
+compression_strategy: mean
+max_compressed_length: null

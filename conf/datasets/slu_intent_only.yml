@@ -1,0 +1,49 @@
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+DATA:
+  - Slurp:
+      datapath: ${DATA_HOME}/slurp
+      task: SLU_INTENT_ONLY
+      languages:
+        - en
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "train"
+        dev:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "eval"
+
+  - SpeechMassive:
+      datapath: ${DATA_HOME}/SpeechMassive-HF
+      task: SLU_INTENT_ONLY
+      languages:
+        - de
+        - fr
+      partitions:
+        train:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "train"
+        validation:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "eval"
+
+  - SpeechMassive:
+      datapath: ${DATA_HOME}/SpeechMassive-HF
+      task: SLU_INTENT_ONLY
+      languages:
+        - es
+      partitions:
+        validation:
+          amount: ":100%"
+          min_duration: 0.1
+          max_duration: 30
+          destination: "eval"

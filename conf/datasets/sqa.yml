@@ -1,0 +1,13 @@
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+DATA:
+  - SpokenSQuAD:
+      datapath: ${DATA_HOME}/Spoken-SQuAD/preprocessed
+      task: SQA
+      languages:
+        - en
+      partitions:
+        train:
+          amount: ":100%"
+          destination: train
+          max_duration: 150  # 2.5 minutes

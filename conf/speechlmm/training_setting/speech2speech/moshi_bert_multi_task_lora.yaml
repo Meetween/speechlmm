@@ -1,0 +1,90 @@
+# @package _global_
+
+defaults:
+  - _self_
+
+wandb_project: speech2speech
+deepspeed_config: ${oc.env:SPEECHLMM_ROOT}/conf/deepspeed/zero0.json
+
+data:
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/multi_task.yml
+  align_text_to_audio: true
+  rebuild_dataset_cache: false
+  num_proc_for_preprocessing: 32
+  task_weights:
+    # text tasks: 0.3
+    TextInstruct: 0.28
+    # MultiTurnTextInstruct: 0.08
+    TSUM: 0.02
+    MT: 0.1
+    TTS: 0.6
+  multi_task_sampler: "alternating"  # or "sequential"
+  replacement: true
+  group_dataset_by_task:
+    train: true
+  max_condition_audio_duration: 5
+  # cache_final_datasets: false
+
+training:
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 8
+  save_steps: 1000
+  save_total_limit: 5
+  num_train_epochs: 10
+  eval_steps: 0
+  eval_strategy: "no"
+  attn_implementation: flash_attention_2
+  dataloader_num_workers: 0
+  mm_projector_lr: 5.0e-5
+  learning_rate: 5.0e-5
+  freeze_modules:
+    - codec_encoder
+    - codec_decoder
+    - text_decoder
+  lora_adapters:
+    - name: text_decoder_peft_adapter
+      target_module: text_decoder.model
+      task_type: CAUSAL_LM
+      r: 128
+      lora_alpha: 256
+      lora_dropout: 0.05
+      bias: none
+      use_rslora: true
+  group_by_modality_length: false
+  report_to: wandb
+
+model:
+  chunk_size_in_seconds: 15
+  chunk_overlap_in_seconds: 2
+  chunk_encoding_strategy: loop
+
+  perturb_prob: 0.2
+  pad_audio_weight: 0.8
+  epad_audio_weight: 1
+  pad_epad_audio_weight_decay: 0.5 # pad_audio_weight * (1 - t/T)^pad_audio_weight_decay
+  perturb_prob_decay: 0.5 # perturb_prob * (1 - t/T)^perturb_prob_decay
+
+  add_all_multimodal_tokens: true
+
+  backfeeding_audio_adapter:
+    audio_adapter:
+      hidden_layers: 6
+  talking_head:
+    depformer_num_layers: 8
+  conditioning_audio_adapter:
+    num_hidden_layers: 4
+
+  codebook_weights: [1, 1, 1, 1, 1, 1, 1, 1]
+
+  # audio_adapter:
+  #   hidden_layers: 4
+
+# python speechlmm/train/train_hydra.py \
+#     --config-name pretrain \
+#     model/codec_encoder=mimi \
+#     model/codec_decoder=mimi \
+#     model/backfeeding_audio_adapter=features \
+#     model/conditioning_audio_adapter=qformer \
+#     model/text_decoder=llama_3_8b \
+#     model/talking_head=moshi_bert \
+#     training_setting=speech2speech/moshi_bert_multi_task_lora

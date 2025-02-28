@@ -1,0 +1,180 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - EverythingInstructMultilingual:
+        datapath: ${DATA_HOME}/everything_instruct_multilingual
+        task: "TextInstruct"
+        languages: ["en"]
+        partitions:
+            train:
+                amount: ":10%"
+                min_num_words: null
+                max_num_words: 200
+                destination: "train"
+
+    - Oasst:
+        datapath: ${DATA_HOME}/oasst1
+        task: "MultiTurnTextInstruct"
+        languages: ["all"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_num_words: null
+                max_num_words: 300
+                destination: "train"
+
+    - Oasst:
+        datapath: ${DATA_HOME}/oasst2
+        task: "MultiTurnTextInstruct"
+        languages: ["all"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_num_words: null
+                max_num_words: 300
+                destination: "train"
+
+    - AMI:
+        datapath: ${DATA_HOME}/ami_segmented
+        task: "SSUM"
+        languages:
+            - en
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: null
+                max_duration: 240
+                destination: "train"
+
+    - ICSI:
+        datapath: ${DATA_HOME}/icsi_segmented
+        task: "SSUM"
+        languages:
+            - en
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: null
+                max_duration: 240
+                destination: "train"
+
+    - AMI:
+        datapath: ${DATA_HOME}/ami_segmented
+        task: "TSUM"
+        languages:
+            - en
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: null
+                max_duration: 240
+                destination: "train"
+
+    - ICSI:
+        datapath: ${DATA_HOME}/icsi_segmented
+        task: "TSUM"
+        languages:
+            - en
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: null
+                max_duration: 240
+                destination: "train"
+
+    - LibriTTS: # same name of the dataset class
+        datapath: ${DATA_HOME}/parler_tts/LibriTTS-R-Filtered
+        task: "TTS" # one task per dataset, you can duplicate the dataset and change the task
+        languages: ["en"]
+        partitions:
+            train_clean_100: # the name of the partition of your dataset, could be any name, such as "train-other-500" or "my-custom-partition"
+                amount: ":100%"  # options: ":X%" or "X1:X2%"
+                destination: "train"
+            train_clean_360:
+                amount: ":100%"
+                destination: "train"
+            train_other_500:
+                amount: ":100%"
+                destination: "train"
+        additional_args:
+            add_speaker_descriptions: false
+
+    - LibriTTS: # same name of the dataset class
+        datapath: ${DATA_HOME}/libritts_s2st_translated/same_speaker_input_output/
+        task: "S2ST" # one task per dataset, you can duplicate the dataset and change the task
+        languages: ["en"]
+        partitions:
+            train: # the name of the partition of your dataset, could be any name, such as "train-other-500" or "my-custom-partition"
+                amount: ":100%"  # options: ":X%" or "X1:X2%"
+                min_duration: 0.1
+                max_duration: 15
+                destination: "train"
+        additional_args:
+            add_speaker_descriptions: false
+            add_translation_prefix: true
+            condition_on_input: true
+
+    - CVSS:
+        datapath: ${DATA_HOME}/CVSS_new
+        task: "S2ST"
+        languages: ["de-en", "es-en", "fr-en", "it-en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+        additional_args:
+            add_translation_prefix: true
+            condition_on_input: true
+
+
+    - CommonVoice:
+        datapath: ${DATA_HOME}/common_voice_17_0
+        task: "ASR"
+        languages: ["en", "de", "fr", "it", "es"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+
+    - CoVoST:
+        datapath: ${DATA_HOME}/CoVoST/preprocessed
+        task: "ST"
+        languages: ["en-de", "fr-en", "it-en", "de-en", "es-en"]
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+
+    - Europarl:
+        datapath: ${DATA_HOME}/europarl-ST/preprocessed
+        task: "ST"
+        languages:
+            - "all"
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"
+
+    - Europarl:
+        datapath: ${DATA_HOME}/europarl-ST/preprocessed
+        task: "MT"
+        languages:
+            - "all"
+        partitions:
+            train:
+                amount: ":100%"
+                min_duration: 0.1
+                max_duration: 30
+                destination: "train"

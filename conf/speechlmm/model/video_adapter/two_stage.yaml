@@ -1,0 +1,7 @@
+defaults:
+  - /model/base_adapter@
+  - _self_
+
+length_adapter: ???
+modality_adapter_before: ???
+modality_adapter_after: ???

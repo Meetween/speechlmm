@@ -1,0 +1,5 @@
+defaults:
+  - train
+  - _self_
+
+training_type: pretrain

@@ -1,0 +1,8 @@
+# @package _global_
+
+defaults:
+  - paper
+  - _self_
+
+data:
+  data_config_path: ${oc.env:SPEECHLMM_ROOT}/conf/datasets/paper/setting_1a_asr_st_max_dur30s.yml

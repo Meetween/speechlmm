@@ -1,0 +1,20 @@
+defaults:
+  - train
+  - _self_
+
+training_type: finetune
+
+training:
+  pretrained_checkpoint: ???
+  mm_projector_lr: 2.0e-5
+  lora_adapters:
+    - name: text_decoder_peft_adapter
+      target_module: text_decoder.model
+      task_type: CAUSAL_LM
+      r: 128
+      lora_alpha: 156
+      lora_dropout: 0.05
+      bias: none
+      use_rslora: true
+  # TODO: fix "AttributeError: 'SpeechLmmDataset' object has no attribute 'modality_lengths'" when `group_by_modality_length` is true
+  group_by_modality_length: false

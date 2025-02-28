@@ -1,0 +1,10 @@
+defaults:
+  - /model/base_adapter@
+  - _self_
+
+model_type: mlp
+hidden_layers: 2
+hidden_size: 4096
+residual_type: interpolation
+force_input_projection: true
+force_output_projection: true

@@ -1,0 +1,14 @@
+defaults:
+  - /model/base_adapter@
+  - _self_
+
+model_type: transformer
+hidden_size: 768
+num_hidden_layers: 4
+num_attention_heads: 12
+intermediate_size: 3072
+hidden_act: gelu
+hidden_dropout_prob: 0.1
+attention_probs_dropout_prob: 0.1
+initializer_range: 0.02
+layer_norm_eps: 1.0e-12

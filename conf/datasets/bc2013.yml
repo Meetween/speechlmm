@@ -1,0 +1,16 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+    - BC2013:
+        datapath: ${DATA_HOME}/BC2013/preprocessed
+        task: "TTS"
+        languages: ["en"]
+        partitions:
+            train:
+                amount: ":10%"
+                min_duration: 1
+                max_duration: 20
+                destination: "train"

@@ -1,0 +1,21 @@
+defaults:
+  - /model/audio_adapter/@qformer: qformer
+  - _self_
+
+model_type: qformer_talking_head
+tempformer_dim: 4096
+depformer_casual: True
+num_query_tokens: 8
+duration_prediction: False
+depformer_multiple_heads: True
+depformer_inner_batch_size: 1024
+depformer_add_text_tokens: True
+num_quantizers: ???
+codebook_size: ???
+qformer:
+  input_dim: null
+  output_dim: null
+  hidden_size: 1024
+  num_hidden_layers: 6
+  num_attention_heads: 16
+  intermediate_size: 4224

@@ -1,0 +1,58 @@
+# conversation template
+# OUTPUTS_TEXT_LIST: "speechlmm/dataset/OUTPUTS_TEXT_LIST.json"
+INPUTS_TEXT_LIST: "speechlmm/dataset/INPUTS_TEXT_LIST.json"
+
+# data
+DATA:
+# WARNING!!! Don't forget the '-' before each dataset, must be parsed as a list
+    - Wikimedia:
+        datapath: ${DATA_HOME}/wikimedia
+        task: "NTP"
+        languages: ["en", "it", "fr", "de", "es"]
+        partitions:
+            train:
+                amount: ":8%"
+                min_num_words: null
+                max_num_words: 200
+                destination: "train"
+# Individual task sizes: [('NTP', 1146744), ('InterleavedTextAudioNTP', 23633), ('TTSBase', 339167)]
+
+    - LibriTTS: # same name of the dataset class
+        datapath: ${DATA_HOME}/parler_tts/LibriTTS-R-Filtered
+        task: "InterleavedTextAudioNTP" # one task per dataset, you can duplicate the dataset and change the task
+        languages: ["en"]
+        partitions:
+            train_clean_100: # the name of the partition of your dataset, could be any name, such as "train-other-500" or "my-custom-partition"
+                amount: ":100%"  # options: ":X%" or "X1:X2%"
+                min_num_words: 20
+                max_num_words: null
+                destination: "train"
+            train_clean_360:
+                amount: ":100%"
+                min_num_words: 20
+                max_num_words: null
+                destination: "train"
+            train_other_500:
+                amount: ":100%"
+                min_num_words: 20
+                max_num_words: null
+                destination: "train"
+        additional_args:
+            add_speaker_descriptions: false
+
+    - LibriTTS: # same name of the dataset class
+        datapath: ${DATA_HOME}/parler_tts/LibriTTS-R-Filtered
+        task: "TTSBase" # one task per dataset, you can duplicate the dataset and change the task
+        languages: ["en"]
+        partitions:
+            train_clean_100: # the name of the partition of your dataset, could be any name, such as "train-other-500" or "my-custom-partition"
+                amount: ":100%"  # options: ":X%" or "X1:X2%"
+                destination: "train"
+            train_clean_360:
+                amount: ":100%"
+                destination: "train"
+            train_other_500:
+                amount: ":100%"
+                destination: "train"
+        additional_args:
+            add_speaker_descriptions: false
