@@ -1,7 +1,7 @@
 defaults:
   - _self_
 
-_name_or_path: meetween/seamless-m4t-v2-large-speech-encoder
+_name_or_path: null
 adaptor_dropout: 0.1
 adaptor_kernel_size: 8
 adaptor_stride: 8
