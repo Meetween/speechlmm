@@ -14,6 +14,7 @@ from speechlmm.model.adapters.outputs import SpeechLmmModuleOutput
 from speechlmm.model.encoders.video_encoders.auto_avsr_modules.espnet.nets.pytorch_backend.transformer.encoder import (
     Encoder,
 )
+from speechlmm.model.utils import normalize_model_name_or_path
 
 
 class AutoAvsrConfig(PretrainedConfig):
@@ -94,7 +95,11 @@ class AutoAvsrEncoder(nn.Module):
         if config_dict is None or name_or_path is None:
             raise NotImplementedError
 
-        self.name_or_path = name_or_path
+        self.name_or_path = normalize_model_name_or_path(
+            name_or_path,
+            allow_hf_hub=False,
+            # ↑ NOTE: Auto-AVSR is not available on Hugging Face Hub yet
+        )
         self.torch_dtype = torch_dtype
         self.device = device
 

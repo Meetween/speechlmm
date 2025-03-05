@@ -43,6 +43,7 @@ from speechlmm.model.codestorm import CodeStorm
 from speechlmm.model.utils import (
     compute_output_length_from_conv1d_hyperparams,
     compute_output_length_from_conv1d_layer,
+    normalize_model_name_or_path,
 )
 
 
@@ -104,6 +105,7 @@ class HfAudioEncoder(
         chunk_size_in_seconds: Optional[float] = None,
         chunk_overlap_in_seconds: float = 0.0,
         chunk_encoding_strategy: str = "loop",  # [batch, loop]
+        allow_hf_hub: bool = True,
     ):
         if self.model_class is None or not issubclass(
             self.model_class, PreTrainedModel
@@ -126,14 +128,15 @@ class HfAudioEncoder(
                 "argument or as part of `config_kwargs` (in which case it "
                 "should be named `_name_or_path`)."
             )
+        self.name_or_path = normalize_model_name_or_path(name_or_path, allow_hf_hub=allow_hf_hub)
 
         torch_dtype_in_config = config_dict.pop("torch_dtype", None)
         torch_dtype = torch_dtype or torch_dtype_in_config
         self.config = self.config_class.from_pretrained(
-            name_or_path, torch_dtype=torch_dtype, **config_dict
+            self.name_or_path, torch_dtype=torch_dtype, **config_dict
         )
-        self.processor = self.processor_class.from_pretrained(name_or_path)
-        self.name_or_path = name_or_path
+        self.processor = self.processor_class.from_pretrained(self.name_or_path)
+
 
         self.set_attn_implementation_with_fallback(attn_implementation)
 
@@ -542,6 +545,37 @@ class SeamlessM4Tv2Encoder(HfAudioEncoder):
         transformers.models.seamless_m4t_v2.modeling_seamless_m4t_v2.SeamlessM4Tv2SpeechEncoder
     )
 
+    def __init__(
+        self,
+        name_or_path: Optional[str] = None,
+        config_dict: Optional[Dict[str, Any]] = None,
+        attn_implementation: Optional[str] = None,
+        torch_dtype: Optional[torch.dtype] = None,
+        cache_dir: Optional[str] = None,
+        delay_load: bool = False,
+        chunk_size_in_seconds: Optional[float] = None,
+        chunk_overlap_in_seconds: float = 0.0,
+        chunk_encoding_strategy: str = "loop",  # [batch, loop]
+        allow_hf_hub: bool = True,
+    ):
+        super().__init__(
+            name_or_path=name_or_path,
+            config_dict=config_dict,
+            attn_implementation=attn_implementation,
+            torch_dtype=torch_dtype,
+            cache_dir=cache_dir,
+            delay_load=delay_load,
+            chunk_size_in_seconds=chunk_size_in_seconds,
+            chunk_overlap_in_seconds=chunk_overlap_in_seconds,
+            chunk_encoding_strategy=chunk_encoding_strategy,
+            allow_hf_hub=False,
+            # ↑ NOTE: we don't allow users to download the model
+            # straight from Hugging Face Hub by default as we want
+            # them to do it manually (for legal compliance reasons)
+            # TODO(anferico): ideally, this parameter should go in the
+            # audio encoder config
+        )
+
     @property
     @lru_cache(maxsize=1)
     def output_sampling_rate(self) -> float:
@@ -658,6 +692,37 @@ class PatchedWhisperEncoder(
 class BaseWhisperEncoder(HfAudioEncoder):
     processor_audio_arg_name = "audio"
     model_class = PatchedWhisperEncoder
+
+    def __init__(
+        self,
+        name_or_path: Optional[str] = None,
+        config_dict: Optional[Dict[str, Any]] = None,
+        attn_implementation: Optional[str] = None,
+        torch_dtype: Optional[torch.dtype] = None,
+        cache_dir: Optional[str] = None,
+        delay_load: bool = False,
+        chunk_size_in_seconds: Optional[float] = None,
+        chunk_overlap_in_seconds: float = 0.0,
+        chunk_encoding_strategy: str = "loop",  # [batch, loop]
+        allow_hf_hub: bool = True,
+    ):
+        super().__init__(
+            name_or_path=name_or_path,
+            config_dict=config_dict,
+            attn_implementation=attn_implementation,
+            torch_dtype=torch_dtype,
+            cache_dir=cache_dir,
+            delay_load=delay_load,
+            chunk_size_in_seconds=chunk_size_in_seconds,
+            chunk_overlap_in_seconds=chunk_overlap_in_seconds,
+            chunk_encoding_strategy=chunk_encoding_strategy,
+            allow_hf_hub=False,
+            # ↑ NOTE: we don't allow users to download the model
+            # straight from Hugging Face Hub by default as we want
+            # them to do it manually (for legal compliance reasons)
+            # TODO(anferico): ideally, this parameter should go in the
+            # audio encoder config
+        )
 
     def _process_audios(self, audios: List[np.ndarray], sr: int, **kwargs):
         return super()._process_audios(

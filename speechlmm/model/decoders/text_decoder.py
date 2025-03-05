@@ -16,6 +16,7 @@ from transformers import (
 
 from speechlmm import conversation as conversation_lib
 from speechlmm.model.attn_implementation import AttentionImplementationMixin
+from speechlmm.model.utils import normalize_model_name_or_path
 
 logger = logging.getLogger(__name__)
 
@@ -60,6 +61,7 @@ class HfTextDecoder(
         attn_implementation: Optional[str] = None,
         torch_dtype: Optional[torch.dtype] = None,
         cache_dir: Optional[str] = None,
+        allow_hf_hub: bool = True,
     ):
         if self.model_class is None or not issubclass(
             self.model_class, PreTrainedModel
@@ -98,7 +100,9 @@ class HfTextDecoder(
                 "argument or as part of `config_kwargs` (in which case it "
                 "should be named `_name_or_path`)."
             )
-        self.name_or_path = name_or_path
+        self.name_or_path = normalize_model_name_or_path(
+            name_or_path, allow_hf_hub=allow_hf_hub
+        )
 
         torch_dtype_in_config = config_dict.pop("torch_dtype", None)
         torch_dtype = torch_dtype or torch_dtype_in_config

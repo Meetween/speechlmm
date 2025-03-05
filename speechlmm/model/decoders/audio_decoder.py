@@ -23,6 +23,7 @@ from transformers.models.mimi.modeling_mimi import (
 
 from speechlmm.model.adapters.utils import lengths_to_attention_mask
 from speechlmm.model.attn_implementation import AttentionImplementationMixin
+from speechlmm.model.utils import normalize_model_name_or_path
 
 
 class HfAudioDecoder(
@@ -59,6 +60,7 @@ class HfAudioDecoder(
         attn_implementation: Optional[str] = None,
         torch_dtype: Optional[torch.dtype] = None,
         cache_dir: Optional[str] = None,
+        allow_hf_hub: bool = True,
     ):
         if self.model_class is None or not issubclass(
             self.model_class, PreTrainedModel
@@ -86,7 +88,9 @@ class HfAudioDecoder(
                 "argument or as part of `config_kwargs` (in which case it "
                 "should be named `_name_or_path`)."
             )
-        self.name_or_path = name_or_path
+        self.name_or_path = normalize_model_name_or_path(
+            name_or_path, allow_hf_hub=allow_hf_hub
+        )
 
         self.config = self.config_class.from_pretrained(
             self.name_or_path, **config_dict

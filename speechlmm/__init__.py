@@ -20,7 +20,7 @@ logging.basicConfig(level=logging.INFO)
 required_env_vars = [
     "DATA_HOME",
     "SPEECHLMM_ROOT",
-    "AUTO_AVSR_CHECKPOINTS",
+    "PRETRAINED_COMPONENTS",
     "CHECKPOINTS_HOME",
 ]
 for var in required_env_vars:

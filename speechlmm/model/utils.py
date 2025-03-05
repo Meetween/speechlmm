@@ -1,7 +1,12 @@
+import contextlib
 import math
 from functools import singledispatch
+import os
+from pathlib import Path
 
 import torch
+from huggingface_hub import model_info
+from huggingface_hub.utils import RepositoryNotFoundError
 
 
 @singledispatch
@@ -90,3 +95,33 @@ def get_candidate_modules_to_save_for_lora(
             )
         if is_leaf:
             yield (prefix, module)
+
+def normalize_model_name_or_path(
+    model_name_or_path: str, allow_hf_hub: bool = True
+) -> str:
+    model_path = Path(model_name_or_path)
+    if model_path.exists():
+        return str(model_path)
+
+    pretrained_components_dir = os.getenv("PRETRAINED_COMPONENTS", None)
+    if pretrained_components_dir is not None:
+        model_path = Path(pretrained_components_dir, model_name_or_path)
+        if model_path.exists():
+            return str(model_path)
+
+    error_msg = (
+        f"Model '{model_name_or_path}' could not be found. Please make "
+        f"sure the model exists either:\n"
+        f"  - locally at {model_name_or_path}\n"
+        f"  - locally at $PRETRAINED_COMPONENTS/{model_name_or_path} (in "
+        f"which case you must set the environment variable "
+        f"$PRETRAINED_COMPONENTS to a suitable path)"
+    )
+
+    if allow_hf_hub:
+        with contextlib.suppress(RepositoryNotFoundError):
+            _ = model_info(model_name_or_path)
+            return model_name_or_path
+        error_msg += "\n  - in the Hugging Face Hub"
+
+    raise ValueError(error_msg)

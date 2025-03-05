@@ -48,6 +48,48 @@ Below is an illustration of the architecture of SpeechLMM version 1.0:
     4. Go to `conf/speechlmm/model/audio_encoder/whisper.yaml` and change the `_name_or_path` to `path/to/some_directory_2`
     5. Download the Auto-AVSR video encoder weights from [here](https://drive.google.com/file/d/1shcWXUK2iauRhW9NbwCc25FjU1CoMm8i/view?usp=sharing) and put them in the same directory to which you'll set the `AUTO_AVSR_CHECKPOINTS` environment variable (see [Installation](#installation))
 
+- In order for the codebase to work properly, you need to set the following environment variables:
+    ```Shell
+    # Directory where your datasets reside
+    export DATA_HOME=...
+    # Path to this repository
+    export SPEECHLMM_ROOT=...
+    # Directory where the pre-trained components (e.g. modality encoders) are stored
+    export PRETRAINED_COMPONENTS=...
+    # Directory where model checkpoints will be stored
+    export CHECKPOINTS_HOME=...
+    ```
+    For convenience, you can add the exports above to your `~/.bashrc` or `~/.zshrc` file, replacing the dots with the actual paths.
+
+- Download pre-trained building blocks for SpeechLMM. Important: you must download these models in `$PRETRAINED_COMPONENTS`
+  1. SeamlessM4T v2
+     ```python
+     import os
+     from transformers import AutoProcessor, AutoModel
+     
+     model_name = "facebook/seamless-m4t-v2-large"
+     processor = AutoProcessor.from_pretrained(model_name)
+     model = AutoModel.from_pretrained(model_name)
+     
+     processor.save_pretrained(os.path.join(os.getenv("PRETRAINED_COMPONENTS"), model_name))
+     model.speech_encoder.save_pretrained(os.path.join(os.getenv("PRETRAINED_COMPONENTS"), model_name))
+     ```
+  2. Whisper v3
+     ```python
+     import os
+     from transformers import AutoProcessor, AutoModel
+     
+     model_name = "openai/whisper-large-v3"
+     processor = AutoProcessor.from_pretrained(model_name)
+     model = AutoModel.from_pretrained(model_name)
+     
+     processor.save_pretrained(os.path.join(os.getenv("PRETRAINED_COMPONENTS"), model_name))
+     model.encoder.save_pretrained(os.path.join(os.getenv("PRETRAINED_COMPONENTS"), model_name))
+     ```
+  3. AutoAVSR
+
+     Download the checkpoint manually from [https://drive.google.com/file/d/1shcWXUK2iauRhW9NbwCc25FjU1CoMm8i](https://drive.google.com/file/d/1shcWXUK2iauRhW9NbwCc25FjU1CoMm8i) and put it in `$PRETRAINED_COMPONENTS/`.
+
 ## 📊 System requirements
 
 - The codebase has only been tested on Linux
@@ -95,21 +137,6 @@ Below is an illustration of the architecture of SpeechLMM version 1.0:
     ```sh
     python apply_patches.py
     ```
-
-7. Set environment variables 📝
-
-    In order for the codebase to work properly, you need to set the following environment variables:
-    ```Shell
-    # Directory where your datasets reside
-    export DATA_HOME=...
-    # Path to this repository
-    export SPEECHLMM_ROOT=...
-    # Directory where the pre-trained AutoAVSR checkpoints are stored
-    export AUTO_AVSR_CHECKPOINTS=...
-    # Directory where model checkpoints will be stored
-    export CHECKPOINTS_HOME=...
-    ```
-    For convenience, you can add the exports above to your `~/.bashrc` or `~/.zshrc` file, replacing the dots with the actual paths.
 
 ### Upgrade to latest code base
 ```Shell

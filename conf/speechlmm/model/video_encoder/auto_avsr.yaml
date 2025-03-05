@@ -2,7 +2,7 @@ defaults:
   - _self_
 
 hidden_size: 768
-_name_or_path: ${oc.env:AUTO_AVSR_CHECKPOINTS}/vsr_trlrs3vox2_base.pth
+_name_or_path: vsr_trlrs3vox2_base.pth
 model_type: auto_avsr
 
 adim: 768

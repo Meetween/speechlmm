@@ -1,7 +1,7 @@
 defaults:
   - _self_
 
-_name_or_path: null
+_name_or_path: openai/whisper-large-v3
 activation_dropout: 0.0
 activation_function: gelu
 apply_spec_augment: false

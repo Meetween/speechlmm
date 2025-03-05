@@ -20,6 +20,29 @@ Below is an illustration of the architecture of SpeechLMM version 1.0:
   - [meta-llama/Llama-3.2-3B-Instruct](https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct)
   - [meta-llama/Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
   - [meta-llama/Llama-3.3-70B-Instruct](https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct)
+- In order for the codebase to work properly, you need to set the following environment variables:
+    ```Shell
+    # Directory where your datasets reside
+    export DATA_HOME=...
+    # Path to this repository
+    export SPEECHLMM_ROOT=...
+    # Directory where the pre-trained components (e.g. modality encoders) are stored
+    export PRETRAINED_COMPONENTS=...
+    # Directory where model checkpoints will be stored
+    export CHECKPOINTS_HOME=...
+    ```
+    For convenience, you can add the exports above to your `~/.bashrc` or `~/.zshrc` file, replacing the dots with the actual paths.
+
+    Alternatively, you can add the following to your `~/.bashrc` or `~/.zshrc` instead:
+    ```Shell
+    source path/to/this/repo/cyfronet.env
+    ```
+    (obviously, replace `path/to/this/repo` with the actual path to the repository)
+
+- Download pre-trained building blocks for SpeechLMM. Important: you must download these models in `$PRETRAINED_COMPONENTS`
+  ```bash
+  aws s3 sync s3://meetween-pretrained-components $PRETRAINED_COMPONENTS
+  ```
 
 ## 📊 System requirements
 
@@ -114,26 +137,6 @@ The codebase has only been tested on Linux.
     ```
     NOTE: the script will inform you that some of the patches could not be applied. It's perfectly normal, so don't worry about that
 
-10. Set environment variables 📝
-
-    In order for the codebase to work properly, you need to set the following environment variables:
-    ```Shell
-    # Directory where your datasets reside
-    export DATA_HOME=...
-    # Path to this repository
-    export SPEECHLMM_ROOT=...
-    # Directory where the pre-trained AutoAVSR checkpoints are stored
-    export AUTO_AVSR_CHECKPOINTS=...
-    # Directory where model checkpoints will be stored
-    export CHECKPOINTS_HOME=...
-    ```
-    For convenience, you can add the exports above to your `~/.bashrc` or `~/.zshrc` file, replacing the dots with the actual paths.
-
-    Alternatively, if you're working on a Cyfronet machine, you can add the following to your `~/.bashrc` or `~/.zshrc` instead:
-    ```Shell
-    source path/to/this/repo/cyfronet.env
-    ```
-    (obviously, replace `path/to/this/repo` with the actual path to the repository)
 ### Upgrade to latest code base
 ```Shell
 git pull

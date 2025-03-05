@@ -17,7 +17,7 @@ setup:
 
     export DATA_HOME=$SCRATCH/data
     export SPEECHLMM_ROOT=$SCRATCH/speechlmm
-    export AUTO_AVSR_CHECKPOINTS=$SCRATCH/auto_avsr_ckpt
+    export PRETRAINED_COMPONENTS=$SCRATCH/pretrained_components
     export CHECKPOINTS_HOME=$SCRATCH/checkpoints
 
     module load Miniconda3/23.3.1-0
