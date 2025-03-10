@@ -11,10 +11,10 @@ Below is an illustration of the architecture of SpeechLMM version 1.0:
 - [Preliminary setup](#preliminary-setup)
 - [System requirements](#system-requirements)
 - [Installation](#installation)
-- [CLI Inference](#cli-inference)
 - [Datasets and dataloaders](#datasets-and-dataloaders)
 - [Codebase](#codebase)
-- [Hydra sweeps](#hydra-sweeps)
+- [Training](#training)
+- [Inference](#inference)
 - [Known issues](#known-issues)
 
 ## 🛠️ Preliminary setup
@@ -144,8 +144,96 @@ Most of the code that implements SpeechLMM is found in [`modeling_speechlmm.py`]
 ### Multimodal encoders, adapters and decoders
 [Multimodal encoders](speechlmm/model/encoders), [multimodal adapters](speechlmm/model/adapters) and [multimodal decoders](speechlmm/model/decoders) are organized into folders. Right now we support the audio and vision modality for encoders and adapters, while decoders support only the text modality. If you wish to contribute additional modalities, make sure to follow the same implementation scheme.
 
-## 🧹 Hydra _sweeps_
-In order to launch training _sweeps_ covering several hyperparameter configurations, use `speechlmm/train/train_hydra.py`. Here's a sample call to run several experiments using different models and different training settings:
+## 🏋🏼‍♀️ Training
+Launching a training is as simple as running a command like the following:
+```sh
+python speechlmm/train/train_hydra.py \
+    --config-name pretrain \
+    model/audio_encoder=seamless \
+    model/audio_adapter=mlp \
+    model/text_decoder=llama_3_8b \
+    training_setting=paper_1a
+```
+
+To specify training configurations, we use [Hydra](https://hydra.cc/), which in turn is based on [OmegaConf](https://omegaconf.readthedocs.io/). In the example above, we are launching a pre-training job using SeamlessM4T v2 as the audio encoder, a simple MLP as the audio adapter, and Llama 3 8B as the text decoder. The "training setting" we are using is `paper_1a`, and the details associated with it (such as which datasets to train on, which tasks, ...) are in `conf/speechlmm/training_setting/paper_1a.yaml`. Note that this file does not contain all the configuration options, but only those that differ from the default ones found in `conf/speechlmm/pretrain.yaml` (hence `--config-name pretrain`).
+
+If you wish to tweak any configuration options, you can do so by creating a new YAML file under `conf/speechlmm/training_setting/` and passing that as the `training_setting` parameter. Alternatively, you can override specific parameters in the command line directly, such as `training.per_device_train_batch_size=16`.
+
+### Fine-tuning
+The procedure for fine-tuning a pre-trained model is not very different than the one for pre-training (as shown above). The only important difference is that you *must* specify the `training.pretrained_checkpoint` parameter, which should point to a directory containing a pre-trained model checkpoint (in particular, a directory containing a `config.json` and a `model.safetensors` file).
+
+For example, let's imagine you trained a model using the command above and the final checkpoint was saved in `/path/to/speechlmm-pretrain-paper_1a`. Now you want to fine-tune it on a new dataset, so you create `conf/datasets/my_finetuning_dataset.yml` containing your dataset configuration and `conf/speechlmm/training_setting/my_finetuning.yaml` with the following content:
+```yaml
+⋮
+
+data:
+  ⋮    
+  data_config_path: conf/datasets/my_finetuning_dataset.yml
+  ⋮
+
+training:
+  ⋮
+  pretrained_checkpoint: /path/to/speechlmm-pretrain-paper_1a
+  ⋮
+
+⋮
+```
+
+At this point, you can launch the fine-tuning job with the following command:
+```sh
+python speechlmm/train/train_hydra.py \
+    model/audio_encoder=seamless \
+    model/audio_adapter=mlp \
+    model/text_decoder=llama_3_8b \
+    training_setting=my_finetuning
+```
+
+### Parameter-efficient pretraining / fine-tuning using LoRA
+If you want to run a parameter-efficient pretraining or fine-tuning using LoRA, you must provide an appropriate value for the `training.lora_adapters` configuration parameter. For example, here's a possible configuration where we apply two different LoRA adapters, one to the text decoder and one to the audio encoder:
+```yaml
+⋮
+
+training:
+  ⋮
+  lora_adapters:
+    - name: text_decoder_peft_adapter
+      target_module: text_decoder.model
+      task_type: CAUSAL_LM
+      r: 128
+      lora_alpha: 256
+      lora_dropout: 0.05
+      bias: none
+      use_rslora: true
+    - name: audio_encoder_peft_adapter
+      target_module: audio_encoder.model
+      task_type: FEATURE_EXTRACTION
+      r: 64
+      lora_alpha: 128
+      lora_dropout: 0.05
+      bias: none
+      use_rslora: true
+  ⋮
+
+⋮
+```
+
+### Keeping certain parameters frozen
+If you want to keep certain parameters frozen during training, you can do so by setting the `training.freeze_modules` configuration parameter to a list of module names. For example, here's how you could keep the audio encoder and text decoder frozen and train only the adapter between them:
+```yaml
+⋮
+
+training:
+  ⋮
+  freeze_modules:
+    - audio_encoder
+    - text_decoder
+  ⋮
+
+⋮
+```
+
+### 🧹 Hydra _sweeps_
+In order to launch training _sweeps_ covering several hyperparameter configurations in parallel, you can use the following command:
 ```sh
 python speechlmm/train/train_hydra.py \
     --multirun \
@@ -158,13 +246,9 @@ python speechlmm/train/train_hydra.py \
     adjustments=[zero3_issue,paper_helios]
 ```
 How to interpret the command above:
-1. a `key=value` argument instructs Hydra to load configuration options from `conf/speechlmm/key/value.yaml`
-2. if `--multirun` is specified and you pass arguments of the form `key=value1,...,valueN`, Hydra will launch a number of separate experiments equal to the number of possible combinations of the specified values. For instance, in the example above we have 3 audio encoders, 3 audio adapters, 2 text decoders and 4 training settings, corresponding to 3\*3\*2\*4 = 72 total experiments. Note that `adjustments` represents an exception: the values are wrapped in square brackets, meaning that each of the 72 jobs will use all the "adjustments" specified there
-3. `--config-name pretrain` instructs Hydra to run a pre-training. This is also the default behavior in case you don't pass `--config-name` at all. If you want to run a fine-tuning, pass `--config-name finetune`
-4. if you wish to submit your jobs to a SLURM cluster like Athena or Helios, you should pass `hydra/launcher=athena` or `hydra/launcher=helios`, respectively. If you want to launch your jobs locally, then you should omit the `launcher` parameter. In fact, for local setups, it usually makes sense to omit `--multirun` too and provide exactly 1 `value` for each `key`
+1. if `--multirun` is specified and you pass arguments of the form `key=value1,...,valueN`, Hydra will launch a number of separate experiments equal to the number of possible combinations of the specified values. For instance, in the example above we have 3 audio encoders, 3 audio adapters, 2 text decoders and 4 training settings, corresponding to 3\*3\*2\*4 = 72 total experiments. Note that `adjustments` represents an exception: the values are wrapped in square brackets, meaning that each of the 72 jobs will use all the "adjustments" specified there
+2. if you wish to submit your jobs to a SLURM cluster like Athena or Helios, you should pass `hydra/launcher=athena` or `hydra/launcher=helios`, respectively. If you want to launch your jobs locally, then you should omit the `hydra/launcher` parameter. In fact, for local setups (i.e. on interactive GPU nodes), it usually makes sense to omit `--multirun` too and provide exactly 1 `value` for each `key` (as we did in the previous example)
 
-> [!IMPORTANT]
-> Currently, `hydra/launcher` only supports `athena` and `helios` as valid values. If you want to run your trainings on a different SLURM-based cluster, you must create a custom launcher in `conf/speechlmm/hydra/launcher`.
 
 ### Multi-node trainings
 At the moment, multi-node trainings are supported only in "sbatch" mode. In other words, you're required to use the `--multirun` flag, <u>even if you don't want to launch multiple experiments at the same time</u>.
@@ -187,6 +271,38 @@ python3 speechlmm/train/train_hydra.py \
 - Fine-tuning requires you to specify the model checkpoint to start training from, which can be a bit problematic to do when you do a multirun. For this reason, that parameter is filled in automatically when you pass `--multirun`, <u>but this only works under the following assumptions</u>:
   1. (reasonable) the model checkpoint to start training from is located in the same parent directory where the output of the fine-tuning will be saved. For example, if the output of the fine-tuning will be stored in `/path/to/lora-speechlmm-finetune-whatever`, then the pre-training checkpoint is assumed to be located in `/path/to/speechlmm-pretrain-whatever`
   2. (not so reasonable) the fine-tuning uses the same training setting as the pre-training. For example, if the output of the fine-tuning will be stored in `/path/to/lora-speechlmm-finetune-whatever-some_setting_name`, then the pre-training checkpoint is assumed to be located in `/path/to/speechlmm-pretrain-whatever-some_setting_name`
+
+## 🎲 Inference
+
+### Online inference (chat)
+To run inference in an *online* fashion, run the following command on a GPU instance:
+
+```Shell
+python speechlmm/serve/cli.py --model-path /path/to/model_checkpoint
+```
+
+While chatting with the model, there are three strings that are not passed directly by the model but are handled differently:
+1. if you send an empty message, the script terminates.
+2. if you write `<reset>`, you clear the conv history. This also clears the audio tokens from the conversation.
+3. if you write `audio:/path/to/new/audio_file` at the end of your message, the model will clear the conv history, load a new audio file
+
+### Offline inference
+To run inference in an offline fashion, e.g. to use it for batch predictions, run `scripts/inference.py`. For example, if you want to run ASR inference on a bunch of audios inside a directory located at `/path/to/audios`, run:
+```sh
+python scripts/inference.py \
+    --model-path /path/to/model_checkpoint \
+    --task asr \
+    --audios-file-path /path/to/audios
+```
+Alternatively, if you want to run inference on the test split of a specific dataset for which you have a configuration file, run:
+```sh
+python scripts/inference.py \
+    --model-path /path/to/model_checkpoint \
+    --task asr \
+    --dataset_config conf/datasets/my_dataset.yml
+```
+
+Note that at the moment, only the following tasks are supported: `asr`, `tts`, `s2st`, `s2st_cloning`. Furthermore, certain tasks (such as `s2st_cloning`) require additional parameters (e.g. `--source-language` and `--target-language`). For more details, run `python scripts/inference.py --help`.
 
 ## ⚠️ Known issues
 - For some reason, **HuBERT** is not compatible with DeepSpeed ZeRO-3 (the training simply hangs while running `HubertModel.from_pretrained(...)`). If you want to use HuBERT as the audio encoder, you must use ZeRO-0, ZeRO-1 or ZeRO-2
