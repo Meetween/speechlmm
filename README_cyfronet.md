@@ -49,7 +49,7 @@ Below is an illustration of the architecture of SpeechLMM version 1.0:
     mkdir -p $HOME/bin
     ./aws/install --install-dir $HOME/aws-cli -b $HOME/bin
     ```
-    Finally, make the `aws` command available by running:
+    Then, make the `aws` command available by running:
     ```Shell
     echo "export PATH=$HOME/bin:$PATH" >> ~/.bashrc
     source ~/.bashrc
@@ -59,6 +59,12 @@ Below is an illustration of the architecture of SpeechLMM version 1.0:
     aws configure
     ```
     You will be prompted to enter your AWS Access Key ID and AWS Secret Access Key, which you can get by following the instructions provided by Cyfronet.
+
+    Finally, one last important step is to set the endpoint URL for S3. Open `$HOME/.aws/config` and add the following line:
+    ```
+    [default]
+    endpoint_url = https://s3p.cloud.cyfronet.pl
+    ```
 
 - Download pre-trained building blocks for SpeechLMM. Important: you must download these models in `$PRETRAINED_COMPONENTS`
   ```bash
