@@ -67,5 +67,6 @@ def load_pretrained_model(
 
     model.requires_grad_(False)
     model.to(dtype=config.torch_dtype)
+    model = model.to(device=device)
     model.eval()
     return model
